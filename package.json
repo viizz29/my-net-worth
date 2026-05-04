@@ -6,12 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate:dev": "cross-env NODE_ENV=local npx sequelize db:migrate"
   },
   "dependencies": {
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "module-alias": "^2.3.4",
     "next": "16.2.4",
+    "pg": "^8.20.0",
+    "pg-hstore": "^2.3.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "sequelize": "^6.37.8",
+    "sequelize-cli": "^6.6.5",
+    "sequelize-typescript": "^2.1.6",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
