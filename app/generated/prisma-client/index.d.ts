@@ -18,6 +18,28 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type users = $Result.DefaultSelection<Prisma.$usersPayload>
+/**
+ * Model accounts
+ * 
+ */
+export type accounts = $Result.DefaultSelection<Prisma.$accountsPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const account_type: {
+  income: 'income',
+  expense: 'expense'
+};
+
+export type account_type = (typeof account_type)[keyof typeof account_type]
+
+}
+
+export type account_type = $Enums.account_type
+
+export const account_type: typeof $Enums.account_type
 
 /**
  * ##  Prisma Client ʲˢ
@@ -149,6 +171,16 @@ export class PrismaClient<
     * ```
     */
   get users(): Prisma.usersDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accounts`: Exposes CRUD operations for the **accounts** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Accounts
+    * const accounts = await prisma.accounts.findMany()
+    * ```
+    */
+  get accounts(): Prisma.accountsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -583,7 +615,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    users: 'users'
+    users: 'users',
+    accounts: 'accounts'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -599,7 +632,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "users"
+      modelProps: "users" | "accounts"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -674,6 +707,80 @@ export namespace Prisma {
           count: {
             args: Prisma.usersCountArgs<ExtArgs>
             result: $Utils.Optional<UsersCountAggregateOutputType> | number
+          }
+        }
+      }
+      accounts: {
+        payload: Prisma.$accountsPayload<ExtArgs>
+        fields: Prisma.accountsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.accountsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.accountsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          findFirst: {
+            args: Prisma.accountsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.accountsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          findMany: {
+            args: Prisma.accountsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>[]
+          }
+          create: {
+            args: Prisma.accountsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          createMany: {
+            args: Prisma.accountsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.accountsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>[]
+          }
+          delete: {
+            args: Prisma.accountsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          update: {
+            args: Prisma.accountsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          deleteMany: {
+            args: Prisma.accountsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.accountsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.accountsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>[]
+          }
+          upsert: {
+            args: Prisma.accountsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$accountsPayload>
+          }
+          aggregate: {
+            args: Prisma.AccountsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccounts>
+          }
+          groupBy: {
+            args: Prisma.accountsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccountsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.accountsCountArgs<ExtArgs>
+            result: $Utils.Optional<AccountsCountAggregateOutputType> | number
           }
         }
       }
@@ -786,6 +893,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     users?: usersOmit
+    accounts?: accountsOmit
   }
 
   /* Types for Logging */
@@ -861,6 +969,36 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UsersCountOutputType
+   */
+
+  export type UsersCountOutputType = {
+    accounts: number
+  }
+
+  export type UsersCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    accounts?: boolean | UsersCountOutputTypeCountAccountsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UsersCountOutputType
+     */
+    select?: UsersCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UsersCountOutputType without action
+   */
+  export type UsersCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: accountsWhereInput
+  }
+
 
   /**
    * Models
@@ -883,11 +1021,11 @@ export namespace Prisma {
   }
 
   export type UsersSumAggregateOutputType = {
-    id: number | null
+    id: bigint | null
   }
 
   export type UsersMinAggregateOutputType = {
-    id: number | null
+    id: bigint | null
     email: string | null
     name: string | null
     password: string | null
@@ -896,7 +1034,7 @@ export namespace Prisma {
   }
 
   export type UsersMaxAggregateOutputType = {
-    id: number | null
+    id: bigint | null
     email: string | null
     name: string | null
     password: string | null
@@ -1038,7 +1176,7 @@ export namespace Prisma {
   }
 
   export type UsersGroupByOutputType = {
-    id: number
+    id: bigint
     email: string
     name: string
     password: string
@@ -1072,6 +1210,8 @@ export namespace Prisma {
     password?: boolean
     created_at?: boolean
     updated_at?: boolean
+    accounts?: boolean | users$accountsArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type usersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1102,12 +1242,20 @@ export namespace Prisma {
   }
 
   export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
+  export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    accounts?: boolean | users$accountsArgs<ExtArgs>
+    _count?: boolean | UsersCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type usersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type usersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $usersPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "users"
-    objects: {}
+    objects: {
+      accounts: Prisma.$accountsPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: bigint
       email: string
       name: string
       password: string
@@ -1507,6 +1655,7 @@ export namespace Prisma {
    */
   export interface Prisma__usersClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    accounts<T extends users$accountsArgs<ExtArgs> = {}>(args?: Subset<T, users$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1536,7 +1685,7 @@ export namespace Prisma {
    * Fields of the users model
    */
   interface usersFieldRefs {
-    readonly id: FieldRef<"users", 'Int'>
+    readonly id: FieldRef<"users", 'BigInt'>
     readonly email: FieldRef<"users", 'String'>
     readonly name: FieldRef<"users", 'String'>
     readonly password: FieldRef<"users", 'String'>
@@ -1559,6 +1708,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where: usersWhereUniqueInput
@@ -1577,6 +1730,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where: usersWhereUniqueInput
@@ -1594,6 +1751,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * Filter, which users to fetch.
      */
@@ -1643,6 +1804,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter, which users to fetch.
      */
     where?: usersWhereInput
@@ -1690,6 +1855,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * Filter, which users to fetch.
      */
@@ -1739,6 +1908,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * The data needed to create a users.
      */
     data: XOR<usersCreateInput, usersUncheckedCreateInput>
@@ -1786,6 +1959,10 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
     /**
      * The data needed to update a users.
      */
@@ -1853,6 +2030,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * The filter to search for the users to update in case it exists.
      */
     where: usersWhereUniqueInput
@@ -1879,6 +2060,10 @@ export namespace Prisma {
      */
     omit?: usersOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+    /**
      * Filter which users to delete.
      */
     where: usersWhereUniqueInput
@@ -1899,6 +2084,30 @@ export namespace Prisma {
   }
 
   /**
+   * users.accounts
+   */
+  export type users$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    where?: accountsWhereInput
+    orderBy?: accountsOrderByWithRelationInput | accountsOrderByWithRelationInput[]
+    cursor?: accountsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountsScalarFieldEnum | AccountsScalarFieldEnum[]
+  }
+
+  /**
    * users without action
    */
   export type usersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1910,6 +2119,1137 @@ export namespace Prisma {
      * Omit specific fields from the users
      */
     omit?: usersOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: usersInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model accounts
+   */
+
+  export type AggregateAccounts = {
+    _count: AccountsCountAggregateOutputType | null
+    _avg: AccountsAvgAggregateOutputType | null
+    _sum: AccountsSumAggregateOutputType | null
+    _min: AccountsMinAggregateOutputType | null
+    _max: AccountsMaxAggregateOutputType | null
+  }
+
+  export type AccountsAvgAggregateOutputType = {
+    user_id: number | null
+    sn: number | null
+  }
+
+  export type AccountsSumAggregateOutputType = {
+    user_id: bigint | null
+    sn: bigint | null
+  }
+
+  export type AccountsMinAggregateOutputType = {
+    user_id: bigint | null
+    sn: bigint | null
+    name: string | null
+    description: string | null
+    type: $Enums.account_type | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type AccountsMaxAggregateOutputType = {
+    user_id: bigint | null
+    sn: bigint | null
+    name: string | null
+    description: string | null
+    type: $Enums.account_type | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type AccountsCountAggregateOutputType = {
+    user_id: number
+    sn: number
+    name: number
+    description: number
+    type: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type AccountsAvgAggregateInputType = {
+    user_id?: true
+    sn?: true
+  }
+
+  export type AccountsSumAggregateInputType = {
+    user_id?: true
+    sn?: true
+  }
+
+  export type AccountsMinAggregateInputType = {
+    user_id?: true
+    sn?: true
+    name?: true
+    description?: true
+    type?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type AccountsMaxAggregateInputType = {
+    user_id?: true
+    sn?: true
+    name?: true
+    description?: true
+    type?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type AccountsCountAggregateInputType = {
+    user_id?: true
+    sn?: true
+    name?: true
+    description?: true
+    type?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type AccountsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which accounts to aggregate.
+     */
+    where?: accountsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of accounts to fetch.
+     */
+    orderBy?: accountsOrderByWithRelationInput | accountsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: accountsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned accounts
+    **/
+    _count?: true | AccountsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AccountsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AccountsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccountsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccountsMaxAggregateInputType
+  }
+
+  export type GetAccountsAggregateType<T extends AccountsAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccounts]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccounts[P]>
+      : GetScalarType<T[P], AggregateAccounts[P]>
+  }
+
+
+
+
+  export type accountsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: accountsWhereInput
+    orderBy?: accountsOrderByWithAggregationInput | accountsOrderByWithAggregationInput[]
+    by: AccountsScalarFieldEnum[] | AccountsScalarFieldEnum
+    having?: accountsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccountsCountAggregateInputType | true
+    _avg?: AccountsAvgAggregateInputType
+    _sum?: AccountsSumAggregateInputType
+    _min?: AccountsMinAggregateInputType
+    _max?: AccountsMaxAggregateInputType
+  }
+
+  export type AccountsGroupByOutputType = {
+    user_id: bigint
+    sn: bigint
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at: Date
+    updated_at: Date
+    _count: AccountsCountAggregateOutputType | null
+    _avg: AccountsAvgAggregateOutputType | null
+    _sum: AccountsSumAggregateOutputType | null
+    _min: AccountsMinAggregateOutputType | null
+    _max: AccountsMaxAggregateOutputType | null
+  }
+
+  type GetAccountsGroupByPayload<T extends accountsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccountsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccountsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccountsGroupByOutputType[P]>
+            : GetScalarType<T[P], AccountsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type accountsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    sn?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accounts"]>
+
+  export type accountsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    sn?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accounts"]>
+
+  export type accountsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    sn?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accounts"]>
+
+  export type accountsSelectScalar = {
+    user_id?: boolean
+    sn?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type accountsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "sn" | "name" | "description" | "type" | "created_at" | "updated_at", ExtArgs["result"]["accounts"]>
+  export type accountsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }
+  export type accountsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }
+  export type accountsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | usersDefaultArgs<ExtArgs>
+  }
+
+  export type $accountsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "accounts"
+    objects: {
+      user: Prisma.$usersPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      user_id: bigint
+      sn: bigint
+      name: string
+      description: string
+      type: $Enums.account_type
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["accounts"]>
+    composites: {}
+  }
+
+  type accountsGetPayload<S extends boolean | null | undefined | accountsDefaultArgs> = $Result.GetResult<Prisma.$accountsPayload, S>
+
+  type accountsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<accountsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccountsCountAggregateInputType | true
+    }
+
+  export interface accountsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['accounts'], meta: { name: 'accounts' } }
+    /**
+     * Find zero or one Accounts that matches the filter.
+     * @param {accountsFindUniqueArgs} args - Arguments to find a Accounts
+     * @example
+     * // Get one Accounts
+     * const accounts = await prisma.accounts.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends accountsFindUniqueArgs>(args: SelectSubset<T, accountsFindUniqueArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Accounts that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {accountsFindUniqueOrThrowArgs} args - Arguments to find a Accounts
+     * @example
+     * // Get one Accounts
+     * const accounts = await prisma.accounts.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends accountsFindUniqueOrThrowArgs>(args: SelectSubset<T, accountsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Accounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsFindFirstArgs} args - Arguments to find a Accounts
+     * @example
+     * // Get one Accounts
+     * const accounts = await prisma.accounts.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends accountsFindFirstArgs>(args?: SelectSubset<T, accountsFindFirstArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Accounts that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsFindFirstOrThrowArgs} args - Arguments to find a Accounts
+     * @example
+     * // Get one Accounts
+     * const accounts = await prisma.accounts.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends accountsFindFirstOrThrowArgs>(args?: SelectSubset<T, accountsFindFirstOrThrowArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Accounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Accounts
+     * const accounts = await prisma.accounts.findMany()
+     * 
+     * // Get first 10 Accounts
+     * const accounts = await prisma.accounts.findMany({ take: 10 })
+     * 
+     * // Only select the `user_id`
+     * const accountsWithUser_idOnly = await prisma.accounts.findMany({ select: { user_id: true } })
+     * 
+     */
+    findMany<T extends accountsFindManyArgs>(args?: SelectSubset<T, accountsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Accounts.
+     * @param {accountsCreateArgs} args - Arguments to create a Accounts.
+     * @example
+     * // Create one Accounts
+     * const Accounts = await prisma.accounts.create({
+     *   data: {
+     *     // ... data to create a Accounts
+     *   }
+     * })
+     * 
+     */
+    create<T extends accountsCreateArgs>(args: SelectSubset<T, accountsCreateArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Accounts.
+     * @param {accountsCreateManyArgs} args - Arguments to create many Accounts.
+     * @example
+     * // Create many Accounts
+     * const accounts = await prisma.accounts.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends accountsCreateManyArgs>(args?: SelectSubset<T, accountsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Accounts and returns the data saved in the database.
+     * @param {accountsCreateManyAndReturnArgs} args - Arguments to create many Accounts.
+     * @example
+     * // Create many Accounts
+     * const accounts = await prisma.accounts.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Accounts and only return the `user_id`
+     * const accountsWithUser_idOnly = await prisma.accounts.createManyAndReturn({
+     *   select: { user_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends accountsCreateManyAndReturnArgs>(args?: SelectSubset<T, accountsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Accounts.
+     * @param {accountsDeleteArgs} args - Arguments to delete one Accounts.
+     * @example
+     * // Delete one Accounts
+     * const Accounts = await prisma.accounts.delete({
+     *   where: {
+     *     // ... filter to delete one Accounts
+     *   }
+     * })
+     * 
+     */
+    delete<T extends accountsDeleteArgs>(args: SelectSubset<T, accountsDeleteArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Accounts.
+     * @param {accountsUpdateArgs} args - Arguments to update one Accounts.
+     * @example
+     * // Update one Accounts
+     * const accounts = await prisma.accounts.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends accountsUpdateArgs>(args: SelectSubset<T, accountsUpdateArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Accounts.
+     * @param {accountsDeleteManyArgs} args - Arguments to filter Accounts to delete.
+     * @example
+     * // Delete a few Accounts
+     * const { count } = await prisma.accounts.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends accountsDeleteManyArgs>(args?: SelectSubset<T, accountsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Accounts
+     * const accounts = await prisma.accounts.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends accountsUpdateManyArgs>(args: SelectSubset<T, accountsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Accounts and returns the data updated in the database.
+     * @param {accountsUpdateManyAndReturnArgs} args - Arguments to update many Accounts.
+     * @example
+     * // Update many Accounts
+     * const accounts = await prisma.accounts.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Accounts and only return the `user_id`
+     * const accountsWithUser_idOnly = await prisma.accounts.updateManyAndReturn({
+     *   select: { user_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends accountsUpdateManyAndReturnArgs>(args: SelectSubset<T, accountsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Accounts.
+     * @param {accountsUpsertArgs} args - Arguments to update or create a Accounts.
+     * @example
+     * // Update or create a Accounts
+     * const accounts = await prisma.accounts.upsert({
+     *   create: {
+     *     // ... data to create a Accounts
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Accounts we want to update
+     *   }
+     * })
+     */
+    upsert<T extends accountsUpsertArgs>(args: SelectSubset<T, accountsUpsertArgs<ExtArgs>>): Prisma__accountsClient<$Result.GetResult<Prisma.$accountsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsCountArgs} args - Arguments to filter Accounts to count.
+     * @example
+     * // Count the number of Accounts
+     * const count = await prisma.accounts.count({
+     *   where: {
+     *     // ... the filter for the Accounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends accountsCountArgs>(
+      args?: Subset<T, accountsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccountsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccountsAggregateArgs>(args: Subset<T, AccountsAggregateArgs>): Prisma.PrismaPromise<GetAccountsAggregateType<T>>
+
+    /**
+     * Group by Accounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {accountsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends accountsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: accountsGroupByArgs['orderBy'] }
+        : { orderBy?: accountsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, accountsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the accounts model
+   */
+  readonly fields: accountsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for accounts.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__accountsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the accounts model
+   */
+  interface accountsFieldRefs {
+    readonly user_id: FieldRef<"accounts", 'BigInt'>
+    readonly sn: FieldRef<"accounts", 'BigInt'>
+    readonly name: FieldRef<"accounts", 'String'>
+    readonly description: FieldRef<"accounts", 'String'>
+    readonly type: FieldRef<"accounts", 'account_type'>
+    readonly created_at: FieldRef<"accounts", 'DateTime'>
+    readonly updated_at: FieldRef<"accounts", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * accounts findUnique
+   */
+  export type accountsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter, which accounts to fetch.
+     */
+    where: accountsWhereUniqueInput
+  }
+
+  /**
+   * accounts findUniqueOrThrow
+   */
+  export type accountsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter, which accounts to fetch.
+     */
+    where: accountsWhereUniqueInput
+  }
+
+  /**
+   * accounts findFirst
+   */
+  export type accountsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter, which accounts to fetch.
+     */
+    where?: accountsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of accounts to fetch.
+     */
+    orderBy?: accountsOrderByWithRelationInput | accountsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for accounts.
+     */
+    cursor?: accountsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of accounts.
+     */
+    distinct?: AccountsScalarFieldEnum | AccountsScalarFieldEnum[]
+  }
+
+  /**
+   * accounts findFirstOrThrow
+   */
+  export type accountsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter, which accounts to fetch.
+     */
+    where?: accountsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of accounts to fetch.
+     */
+    orderBy?: accountsOrderByWithRelationInput | accountsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for accounts.
+     */
+    cursor?: accountsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of accounts.
+     */
+    distinct?: AccountsScalarFieldEnum | AccountsScalarFieldEnum[]
+  }
+
+  /**
+   * accounts findMany
+   */
+  export type accountsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter, which accounts to fetch.
+     */
+    where?: accountsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of accounts to fetch.
+     */
+    orderBy?: accountsOrderByWithRelationInput | accountsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing accounts.
+     */
+    cursor?: accountsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` accounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` accounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of accounts.
+     */
+    distinct?: AccountsScalarFieldEnum | AccountsScalarFieldEnum[]
+  }
+
+  /**
+   * accounts create
+   */
+  export type accountsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a accounts.
+     */
+    data: XOR<accountsCreateInput, accountsUncheckedCreateInput>
+  }
+
+  /**
+   * accounts createMany
+   */
+  export type accountsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many accounts.
+     */
+    data: accountsCreateManyInput | accountsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * accounts createManyAndReturn
+   */
+  export type accountsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * The data used to create many accounts.
+     */
+    data: accountsCreateManyInput | accountsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * accounts update
+   */
+  export type accountsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a accounts.
+     */
+    data: XOR<accountsUpdateInput, accountsUncheckedUpdateInput>
+    /**
+     * Choose, which accounts to update.
+     */
+    where: accountsWhereUniqueInput
+  }
+
+  /**
+   * accounts updateMany
+   */
+  export type accountsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update accounts.
+     */
+    data: XOR<accountsUpdateManyMutationInput, accountsUncheckedUpdateManyInput>
+    /**
+     * Filter which accounts to update
+     */
+    where?: accountsWhereInput
+    /**
+     * Limit how many accounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * accounts updateManyAndReturn
+   */
+  export type accountsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * The data used to update accounts.
+     */
+    data: XOR<accountsUpdateManyMutationInput, accountsUncheckedUpdateManyInput>
+    /**
+     * Filter which accounts to update
+     */
+    where?: accountsWhereInput
+    /**
+     * Limit how many accounts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * accounts upsert
+   */
+  export type accountsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the accounts to update in case it exists.
+     */
+    where: accountsWhereUniqueInput
+    /**
+     * In case the accounts found by the `where` argument doesn't exist, create a new accounts with this data.
+     */
+    create: XOR<accountsCreateInput, accountsUncheckedCreateInput>
+    /**
+     * In case the accounts was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<accountsUpdateInput, accountsUncheckedUpdateInput>
+  }
+
+  /**
+   * accounts delete
+   */
+  export type accountsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
+    /**
+     * Filter which accounts to delete.
+     */
+    where: accountsWhereUniqueInput
+  }
+
+  /**
+   * accounts deleteMany
+   */
+  export type accountsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which accounts to delete
+     */
+    where?: accountsWhereInput
+    /**
+     * Limit how many accounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * accounts without action
+   */
+  export type accountsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the accounts
+     */
+    select?: accountsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the accounts
+     */
+    omit?: accountsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: accountsInclude<ExtArgs> | null
   }
 
 
@@ -1939,6 +3279,19 @@ export namespace Prisma {
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
+  export const AccountsScalarFieldEnum: {
+    user_id: 'user_id',
+    sn: 'sn',
+    name: 'name',
+    description: 'description',
+    type: 'type',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type AccountsScalarFieldEnum = (typeof AccountsScalarFieldEnum)[keyof typeof AccountsScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -1961,16 +3314,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'BigInt'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
     
 
 
   /**
-   * Reference to a field of type 'Int[]'
+   * Reference to a field of type 'BigInt[]'
    */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -2003,6 +3356,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'account_type'
+   */
+  export type Enumaccount_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'account_type'>
+    
+
+
+  /**
+   * Reference to a field of type 'account_type[]'
+   */
+  export type ListEnumaccount_typeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'account_type[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2023,12 +3404,13 @@ export namespace Prisma {
     AND?: usersWhereInput | usersWhereInput[]
     OR?: usersWhereInput[]
     NOT?: usersWhereInput | usersWhereInput[]
-    id?: IntFilter<"users"> | number
+    id?: BigIntFilter<"users"> | bigint | number
     email?: StringFilter<"users"> | string
     name?: StringFilter<"users"> | string
     password?: StringFilter<"users"> | string
     created_at?: DateTimeFilter<"users"> | Date | string
     updated_at?: DateTimeFilter<"users"> | Date | string
+    accounts?: AccountsListRelationFilter
   }
 
   export type usersOrderByWithRelationInput = {
@@ -2038,10 +3420,11 @@ export namespace Prisma {
     password?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    accounts?: accountsOrderByRelationAggregateInput
   }
 
   export type usersWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: bigint | number
     email?: string
     AND?: usersWhereInput | usersWhereInput[]
     OR?: usersWhereInput[]
@@ -2050,6 +3433,7 @@ export namespace Prisma {
     password?: StringFilter<"users"> | string
     created_at?: DateTimeFilter<"users"> | Date | string
     updated_at?: DateTimeFilter<"users"> | Date | string
+    accounts?: AccountsListRelationFilter
   }, "id" | "email">
 
   export type usersOrderByWithAggregationInput = {
@@ -2070,7 +3454,7 @@ export namespace Prisma {
     AND?: usersScalarWhereWithAggregatesInput | usersScalarWhereWithAggregatesInput[]
     OR?: usersScalarWhereWithAggregatesInput[]
     NOT?: usersScalarWhereWithAggregatesInput | usersScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"users"> | number
+    id?: BigIntWithAggregatesFilter<"users"> | bigint | number
     email?: StringWithAggregatesFilter<"users"> | string
     name?: StringWithAggregatesFilter<"users"> | string
     password?: StringWithAggregatesFilter<"users"> | string
@@ -2078,42 +3462,116 @@ export namespace Prisma {
     updated_at?: DateTimeWithAggregatesFilter<"users"> | Date | string
   }
 
+  export type accountsWhereInput = {
+    AND?: accountsWhereInput | accountsWhereInput[]
+    OR?: accountsWhereInput[]
+    NOT?: accountsWhereInput | accountsWhereInput[]
+    user_id?: BigIntFilter<"accounts"> | bigint | number
+    sn?: BigIntFilter<"accounts"> | bigint | number
+    name?: StringFilter<"accounts"> | string
+    description?: StringFilter<"accounts"> | string
+    type?: Enumaccount_typeFilter<"accounts"> | $Enums.account_type
+    created_at?: DateTimeFilter<"accounts"> | Date | string
+    updated_at?: DateTimeFilter<"accounts"> | Date | string
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+  }
+
+  export type accountsOrderByWithRelationInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    user?: usersOrderByWithRelationInput
+  }
+
+  export type accountsWhereUniqueInput = Prisma.AtLeast<{
+    user_id_sn?: accountsUser_idSnCompoundUniqueInput
+    AND?: accountsWhereInput | accountsWhereInput[]
+    OR?: accountsWhereInput[]
+    NOT?: accountsWhereInput | accountsWhereInput[]
+    user_id?: BigIntFilter<"accounts"> | bigint | number
+    sn?: BigIntFilter<"accounts"> | bigint | number
+    name?: StringFilter<"accounts"> | string
+    description?: StringFilter<"accounts"> | string
+    type?: Enumaccount_typeFilter<"accounts"> | $Enums.account_type
+    created_at?: DateTimeFilter<"accounts"> | Date | string
+    updated_at?: DateTimeFilter<"accounts"> | Date | string
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+  }, "user_id_sn">
+
+  export type accountsOrderByWithAggregationInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: accountsCountOrderByAggregateInput
+    _avg?: accountsAvgOrderByAggregateInput
+    _max?: accountsMaxOrderByAggregateInput
+    _min?: accountsMinOrderByAggregateInput
+    _sum?: accountsSumOrderByAggregateInput
+  }
+
+  export type accountsScalarWhereWithAggregatesInput = {
+    AND?: accountsScalarWhereWithAggregatesInput | accountsScalarWhereWithAggregatesInput[]
+    OR?: accountsScalarWhereWithAggregatesInput[]
+    NOT?: accountsScalarWhereWithAggregatesInput | accountsScalarWhereWithAggregatesInput[]
+    user_id?: BigIntWithAggregatesFilter<"accounts"> | bigint | number
+    sn?: BigIntWithAggregatesFilter<"accounts"> | bigint | number
+    name?: StringWithAggregatesFilter<"accounts"> | string
+    description?: StringWithAggregatesFilter<"accounts"> | string
+    type?: Enumaccount_typeWithAggregatesFilter<"accounts"> | $Enums.account_type
+    created_at?: DateTimeWithAggregatesFilter<"accounts"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"accounts"> | Date | string
+  }
+
   export type usersCreateInput = {
+    id?: bigint | number
     email: string
     name: string
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    accounts?: accountsCreateNestedManyWithoutUserInput
   }
 
   export type usersUncheckedCreateInput = {
-    id?: number
+    id?: bigint | number
     email: string
     name: string
     password: string
     created_at?: Date | string
     updated_at?: Date | string
+    accounts?: accountsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type usersUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: accountsUpdateManyWithoutUserNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: accountsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type usersCreateManyInput = {
-    id?: number
+    id?: bigint | number
     email: string
     name: string
     password: string
@@ -2122,6 +3580,7 @@ export namespace Prisma {
   }
 
   export type usersUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -2130,7 +3589,7 @@ export namespace Prisma {
   }
 
   export type usersUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -2138,15 +3597,84 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type accountsCreateInput = {
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: usersCreateNestedOneWithoutAccountsInput
+  }
+
+  export type accountsUncheckedCreateInput = {
+    user_id: bigint | number
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type accountsUpdateInput = {
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: usersUpdateOneRequiredWithoutAccountsNestedInput
+  }
+
+  export type accountsUncheckedUpdateInput = {
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type accountsCreateManyInput = {
+    user_id: bigint | number
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type accountsUpdateManyMutationInput = {
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type accountsUncheckedUpdateManyInput = {
+    user_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2173,6 +3701,16 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type AccountsListRelationFilter = {
+    every?: accountsWhereInput
+    some?: accountsWhereInput
+    none?: accountsWhereInput
+  }
+
+  export type accountsOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type usersCountOrderByAggregateInput = {
@@ -2210,20 +3748,20 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
     _count?: NestedIntFilter<$PrismaModel>
     _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2258,6 +3796,95 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type Enumaccount_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_type | Enumaccount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_typeFilter<$PrismaModel> | $Enums.account_type
+  }
+
+  export type UsersScalarRelationFilter = {
+    is?: usersWhereInput
+    isNot?: usersWhereInput
+  }
+
+  export type accountsUser_idSnCompoundUniqueInput = {
+    user_id: bigint | number
+    sn: bigint | number
+  }
+
+  export type accountsCountOrderByAggregateInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type accountsAvgOrderByAggregateInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+  }
+
+  export type accountsMaxOrderByAggregateInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type accountsMinOrderByAggregateInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type accountsSumOrderByAggregateInput = {
+    user_id?: SortOrder
+    sn?: SortOrder
+  }
+
+  export type Enumaccount_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_type | Enumaccount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_typeWithAggregatesFilter<$PrismaModel> | $Enums.account_type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumaccount_typeFilter<$PrismaModel>
+    _max?: NestedEnumaccount_typeFilter<$PrismaModel>
+  }
+
+  export type accountsCreateNestedManyWithoutUserInput = {
+    create?: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput> | accountsCreateWithoutUserInput[] | accountsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: accountsCreateOrConnectWithoutUserInput | accountsCreateOrConnectWithoutUserInput[]
+    createMany?: accountsCreateManyUserInputEnvelope
+    connect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+  }
+
+  export type accountsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput> | accountsCreateWithoutUserInput[] | accountsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: accountsCreateOrConnectWithoutUserInput | accountsCreateOrConnectWithoutUserInput[]
+    createMany?: accountsCreateManyUserInputEnvelope
+    connect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2266,23 +3893,61 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type accountsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput> | accountsCreateWithoutUserInput[] | accountsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: accountsCreateOrConnectWithoutUserInput | accountsCreateOrConnectWithoutUserInput[]
+    upsert?: accountsUpsertWithWhereUniqueWithoutUserInput | accountsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: accountsCreateManyUserInputEnvelope
+    set?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    disconnect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    delete?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    connect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    update?: accountsUpdateWithWhereUniqueWithoutUserInput | accountsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: accountsUpdateManyWithWhereWithoutUserInput | accountsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: accountsScalarWhereInput | accountsScalarWhereInput[]
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type accountsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput> | accountsCreateWithoutUserInput[] | accountsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: accountsCreateOrConnectWithoutUserInput | accountsCreateOrConnectWithoutUserInput[]
+    upsert?: accountsUpsertWithWhereUniqueWithoutUserInput | accountsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: accountsCreateManyUserInputEnvelope
+    set?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    disconnect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    delete?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    connect?: accountsWhereUniqueInput | accountsWhereUniqueInput[]
+    update?: accountsUpdateWithWhereUniqueWithoutUserInput | accountsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: accountsUpdateManyWithWhereWithoutUserInput | accountsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: accountsScalarWhereInput | accountsScalarWhereInput[]
+  }
+
+  export type usersCreateNestedOneWithoutAccountsInput = {
+    create?: XOR<usersCreateWithoutAccountsInput, usersUncheckedCreateWithoutAccountsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutAccountsInput
+    connect?: usersWhereUniqueInput
+  }
+
+  export type Enumaccount_typeFieldUpdateOperationsInput = {
+    set?: $Enums.account_type
+  }
+
+  export type usersUpdateOneRequiredWithoutAccountsNestedInput = {
+    create?: XOR<usersCreateWithoutAccountsInput, usersUncheckedCreateWithoutAccountsInput>
+    connectOrCreate?: usersCreateOrConnectWithoutAccountsInput
+    upsert?: usersUpsertWithoutAccountsInput
+    connect?: usersWhereUniqueInput
+    update?: XOR<XOR<usersUpdateToOneWithWhereWithoutAccountsInput, usersUpdateWithoutAccountsInput>, usersUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2310,7 +3975,23 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -2318,12 +3999,7 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -2366,6 +4042,168 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumaccount_typeFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_type | Enumaccount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_typeFilter<$PrismaModel> | $Enums.account_type
+  }
+
+  export type NestedEnumaccount_typeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.account_type | Enumaccount_typeFieldRefInput<$PrismaModel>
+    in?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.account_type[] | ListEnumaccount_typeFieldRefInput<$PrismaModel>
+    not?: NestedEnumaccount_typeWithAggregatesFilter<$PrismaModel> | $Enums.account_type
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumaccount_typeFilter<$PrismaModel>
+    _max?: NestedEnumaccount_typeFilter<$PrismaModel>
+  }
+
+  export type accountsCreateWithoutUserInput = {
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type accountsUncheckedCreateWithoutUserInput = {
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type accountsCreateOrConnectWithoutUserInput = {
+    where: accountsWhereUniqueInput
+    create: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput>
+  }
+
+  export type accountsCreateManyUserInputEnvelope = {
+    data: accountsCreateManyUserInput | accountsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type accountsUpsertWithWhereUniqueWithoutUserInput = {
+    where: accountsWhereUniqueInput
+    update: XOR<accountsUpdateWithoutUserInput, accountsUncheckedUpdateWithoutUserInput>
+    create: XOR<accountsCreateWithoutUserInput, accountsUncheckedCreateWithoutUserInput>
+  }
+
+  export type accountsUpdateWithWhereUniqueWithoutUserInput = {
+    where: accountsWhereUniqueInput
+    data: XOR<accountsUpdateWithoutUserInput, accountsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type accountsUpdateManyWithWhereWithoutUserInput = {
+    where: accountsScalarWhereInput
+    data: XOR<accountsUpdateManyMutationInput, accountsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type accountsScalarWhereInput = {
+    AND?: accountsScalarWhereInput | accountsScalarWhereInput[]
+    OR?: accountsScalarWhereInput[]
+    NOT?: accountsScalarWhereInput | accountsScalarWhereInput[]
+    user_id?: BigIntFilter<"accounts"> | bigint | number
+    sn?: BigIntFilter<"accounts"> | bigint | number
+    name?: StringFilter<"accounts"> | string
+    description?: StringFilter<"accounts"> | string
+    type?: Enumaccount_typeFilter<"accounts"> | $Enums.account_type
+    created_at?: DateTimeFilter<"accounts"> | Date | string
+    updated_at?: DateTimeFilter<"accounts"> | Date | string
+  }
+
+  export type usersCreateWithoutAccountsInput = {
+    id?: bigint | number
+    email: string
+    name: string
+    password: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type usersUncheckedCreateWithoutAccountsInput = {
+    id?: bigint | number
+    email: string
+    name: string
+    password: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type usersCreateOrConnectWithoutAccountsInput = {
+    where: usersWhereUniqueInput
+    create: XOR<usersCreateWithoutAccountsInput, usersUncheckedCreateWithoutAccountsInput>
+  }
+
+  export type usersUpsertWithoutAccountsInput = {
+    update: XOR<usersUpdateWithoutAccountsInput, usersUncheckedUpdateWithoutAccountsInput>
+    create: XOR<usersCreateWithoutAccountsInput, usersUncheckedCreateWithoutAccountsInput>
+    where?: usersWhereInput
+  }
+
+  export type usersUpdateToOneWithWhereWithoutAccountsInput = {
+    where?: usersWhereInput
+    data: XOR<usersUpdateWithoutAccountsInput, usersUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type usersUpdateWithoutAccountsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type usersUncheckedUpdateWithoutAccountsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type accountsCreateManyUserInput = {
+    sn: bigint | number
+    name: string
+    description: string
+    type: $Enums.account_type
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type accountsUpdateWithoutUserInput = {
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type accountsUncheckedUpdateWithoutUserInput = {
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type accountsUncheckedUpdateManyWithoutUserInput = {
+    sn?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: Enumaccount_typeFieldUpdateOperationsInput | $Enums.account_type
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -129,6 +129,16 @@ exports.Prisma.UsersScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.AccountsScalarFieldEnum = {
+  user_id: 'user_id',
+  sn: 'sn',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -138,10 +148,14 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.account_type = exports.$Enums.account_type = {
+  income: 'income',
+  expense: 'expense'
+};
 
 exports.Prisma.ModelName = {
-  users: 'users'
+  users: 'users',
+  accounts: 'accounts'
 };
 
 /**

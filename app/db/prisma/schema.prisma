@@ -5,19 +5,17 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
   output          = "../../generated/prisma-client"
 }
-
 
 datasource db {
   provider = "postgresql"
 }
 
-
 model users {
-  id Int @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
 
   email    String @unique
   name     String
@@ -26,4 +24,28 @@ model users {
   created_at DateTime @default(now()) @map("created_at")
   updated_at DateTime @default(now()) @updatedAt @map("updated_at")
 
+  accounts accounts[]
+}
+
+enum account_type {
+  income
+  expense
+}
+
+model accounts {
+  user_id BigInt
+  user    users  @relation(fields: [user_id], references: [id])
+
+  sn BigInt
+
+  name String
+
+  description String
+
+  type account_type
+
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@id([user_id, sn])
 }
