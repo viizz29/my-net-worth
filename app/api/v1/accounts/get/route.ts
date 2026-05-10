@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const GET = (req: NextRequest) =>
-  ApiV1Wrapper(req, async (wealthTrackerRequest) => {
-    const userId = wealthTrackerRequest.user.getId();
+  ApiV1Wrapper(req, async (req) => {
+    const userId = req.getUser().getId();
     return getAccountsForUser(userId);
   });
