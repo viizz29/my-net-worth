@@ -2,12 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import {
   camelizeKeysAndEncryptIDs,
+  decodeId,
   kebabizeKeysAndDecryptIDs,
 } from "@/app/api/_lib/camelize-and-kebabize";
 import { JWT_SECRET } from "@/app/backend-config";
+import { ValidationError } from "yup";
+import { ApiError } from "../_lib/api-error";
+import { GenericObject } from "../_lib/general";
+import { CustomLogger } from "../_lib/my-logger";
+import { AppError } from "../_lib/my-error";
 
 type ApiHandlerOptions = {
   successStatus?: number;
+  publicAPI?: boolean;
+  doNotWrap?: boolean;
 };
 
 export interface ApiV1ResponseType {
@@ -16,86 +24,147 @@ export interface ApiV1ResponseType {
   data: unknown;
 }
 
+export interface DecodedToken {
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
 export class ApiV1User {
   private id: bigint;
-  private name: string;
-  constructor(decodedValue: any) {
-    this.id = BigInt(decodedValue?.id);
-    this.name = decodedValue?.name;
+  constructor(decodedValue: DecodedToken) {
+    this.id = BigInt(decodeId(decodedValue.sub)[0]);
   }
   public getId() {
     return this.id;
   }
-  public getName() {
-    return this.name;
-  }
 }
 
-export interface ApiV1Request {
-  user: ApiV1User;
-  originalBody: { [key: string]: any };
-  body: { [key: string]: any };
+export class ApiV1Request {
+  private user: ApiV1User | null;
+  private originalBody: { [key: string]: unknown };
+  private body: { [key: string]: unknown };
+  constructor({
+    user,
+    originalBody,
+    body,
+  }: {
+    user: ApiV1User | null;
+    originalBody: { [key: string]: unknown };
+    body: { [key: string]: unknown };
+  }) {
+    this.user = user;
+    this.originalBody = originalBody;
+    this.body = body;
+  }
+
+  getUser() {
+    if (!this.user) {
+      throw new Error("Unable to verify user identity.");
+    }
+    return this.user;
+  }
+
+  getOriginalBody() {
+    return this.originalBody;
+  }
+
+  getBody() {
+    return this.body;
+  }
 }
 
 export const ApiV1Wrapper = async (
   req: NextRequest,
-  handler: (wealthTrackerRequest: ApiV1Request) => any,
+  handler: (req: ApiV1Request) => unknown,
   options: ApiHandlerOptions = {},
-): Promise<NextResponse> => {
-  return new Promise<NextResponse>(async (resolve) => {
-    try {
-      console.log("An API is hit !");
+) => {
+  try {
+    CustomLogger.i("An API is hit !", req.url);
 
+    let decodedAuthToken: DecodedToken | null = null;
+
+    if (!options.publicAPI) {
       // decode the user authentication information
       const token = req.headers.get("authorization")?.replace("Bearer ", "");
-      if (!token) throw new Error("Invalid Authentication Token");
-      if (!JWT_SECRET) throw new Error("Server error, secret key not set");
-      const decoded: any = jwt.verify(token, JWT_SECRET as string);
 
-      // Decode the body
-      const originalBody = req.body ? await req.json() : {};
-      console.log(originalBody, "originalBody");
-      const processedBody = kebabizeKeysAndDecryptIDs(originalBody);
-      console.log(processedBody, "processedBody");
-      const apiv1Request = {
-        user: new ApiV1User(decoded),
-        originalBody,
-        body: processedBody,
-      };
+      if (!token) throw new AppError(401, "Authentication required.");
+      if (!JWT_SECRET)
+        throw new AppError(401, "Server error, secret key not set");
 
-      // call the actual handler
-      const result = await handler(apiv1Request);
+      decodedAuthToken = jwt.verify(
+        token,
+        JWT_SECRET as string,
+      ) as DecodedToken;
+      CustomLogger.t("Decoded auth token:", decodedAuthToken);
+    }
 
-      // camelize the keys and hash the ids recursively
-      const transformedResult = camelizeKeysAndEncryptIDs(result);
+    // Decode the body if any
+    const originalBody = req.body ? await req.json() : {};
+    CustomLogger.t(originalBody, "originalBody");
+    const processedBody = kebabizeKeysAndDecryptIDs(originalBody);
+    CustomLogger.t(processedBody, "processedBody");
 
-      // prepare the response object
-      const response: ApiV1ResponseType = {
-        code: options.successStatus ?? 200,
-        msg: "OK",
-        data: transformedResult,
-      };
+    const apiV1Request = new ApiV1Request({
+      user: decodedAuthToken ? new ApiV1User(decodedAuthToken) : null,
+      originalBody,
+      body: processedBody,
+    });
 
-      // send the response
+    // call the actual handler, camelize the keys and hash the ids recursively (of the response)
+    const result = camelizeKeysAndEncryptIDs(
+      (await handler(apiV1Request)) as GenericObject,
+    );
 
-      resolve(
-        NextResponse.json(response, {
-          status: options.successStatus ?? 200,
-        }),
-      );
+    // send the response
+    CustomLogger.i("Api finished !");
 
-      console.log("Api finished !");
-    } catch (error: any) {
-      const response: ApiV1ResponseType = {
-        code: 500,
-        msg: "ERROR",
-        data: error.toString(),
-      };
-      resolve(
-        NextResponse.json(response, {
-          status: 500,
-        }),
+    return NextResponse.json(
+      options.doNotWrap
+        ? result
+        : {
+            code: options.successStatus ?? 200,
+            msg: "OK",
+            data: result,
+          },
+      {
+        status: options.successStatus ?? 200,
+      },
+    );
+  } catch (error: unknown) {
+    if (error instanceof ValidationError) {
+      return NextResponse.json(
+        {
+          code: 400,
+          msg: "NOT OK",
+          data: error.errors.length > 0 ? error.errors : error.message,
+        },
+        {
+          status: 400,
+        },
       );
     }
-  });
+
+    if (error instanceof AppError) {
+      return NextResponse.json(
+        {
+          code: error.getCode(),
+          msg: error.getMessage(),
+        },
+        {
+          status: error.getCode(),
+        },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        code: 500,
+        msg: "Internal Server Error",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
 };

@@ -7,8 +7,8 @@ export const POST = (req: NextRequest) =>
   ApiV1Wrapper(
     req,
     async (req: ApiV1Request) => {
-      const userId = req.user.getId();
-      const body = await parseCreateAccountRequestDto(req.originalBody);
+      const userId = req.getUser().getId();
+      const body = await parseCreateAccountRequestDto(req.getBody());
       return createAccountForUser(userId, body);
     },
     // { successStatus: 201 },

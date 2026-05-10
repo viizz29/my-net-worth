@@ -49,7 +49,7 @@ export default function ApiDocsSwagger() {
             onComplete={(system) => {
               uiRef.current = system;
               // Restore session from localStorage if a token exists
-              const savedToken = localStorage.getItem("authToken");
+              const savedToken = localStorage.getItem("swaggerUIAuthToken");
               if (savedToken) {
                 system.preauthorizeApiKey("bearerAuth", savedToken);
               }
@@ -67,7 +67,7 @@ export default function ApiDocsSwagger() {
 
                 const { token, user } = responseBody;
                 if (token) {
-                  localStorage.setItem('authToken', token);  // Store token locally
+                  localStorage.setItem('swaggerUIAuthToken', token);  // Store token locally
                   uiRef.current?.preauthorizeApiKey("bearerAuth", token);  // Preauthorize token for future requests
                   console.log("Token stored and preauthorized:", token);
                 }

@@ -8,6 +8,7 @@ import {
   type LoginResponseDto,
 } from "@/app/api/v1/auth/dtos/login-request-dto";
 import { AuthServiceError } from "./auth-service-error";
+import { encodeId } from "@/app/api/_lib/camelize-and-kebabize";
 
 export async function loginUser({
   email,
@@ -33,7 +34,7 @@ export async function loginUser({
   }
 
   const token = jwt.sign(
-    { id: foundUser.id.toString(), name: foundUser.name },
+    { sub: encodeId(foundUser.id.toString()) },
     JWT_SECRET,
     {
       expiresIn: "2 days",

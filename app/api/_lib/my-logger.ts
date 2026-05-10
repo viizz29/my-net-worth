@@ -45,39 +45,39 @@ enum LogLevels {
   ALL,
 }
 export class CustomLogger {
-  static async f(...params: any[]) {
+  static async f(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.FATAL) {
-      console.log(MAGENTA, getIST(), ...params);
+      console.log(MAGENTA, getIST(), ...params, RESET);
     }
   }
 
-  static async e(...params: any[]) {
+  static async e(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.ERROR) {
-      console.log(RED, getIST(), ...params);
+      console.log(RED, getIST(), ...params, RESET);
     }
   }
 
-  static async w(...params: any[]) {
+  static async w(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.WARN) {
-      console.log(YELLOW, getIST(), ...params);
+      console.log(YELLOW, getIST(), ...params, RESET);
     }
   }
 
-  static async i(...params: any[]) {
+  static async i(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.INFO) {
-      console.log(GREEN, getIST(), ...params);
+      console.log(GREEN, getIST(), ...params, RESET);
     }
   }
 
-  static async d(...params: any[]) {
+  static async d(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.DEBUG) {
-      console.log(RED, getIST(), ...params);
+      console.log(RED, getIST(), ...params, RESET);
     }
   }
 
-  static async t(...params: any[]) {
+  static async t(...params: unknown[]) {
     if (LOG_LEVEL >= LogLevels.TRACE) {
-      console.log(RED, getIST(), ...params);
+      console.log(RED, getIST(), ...params, RESET);
     }
   }
 }

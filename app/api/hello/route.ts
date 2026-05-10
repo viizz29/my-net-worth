@@ -1,5 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { ApiV1Wrapper } from "../v1/api-v1-wrapper";
 
-export async function GET(request: Request) {
-  return NextResponse.json({ msg: "OK", data: "Hello World!" });
-}
+export const GET = (req: NextRequest) =>
+  ApiV1Wrapper(
+    req,
+    async (req) => {
+      return "Hello World!";
+    },
+    { publicAPI: true },
+  );
