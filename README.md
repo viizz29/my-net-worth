@@ -13,5 +13,4 @@ npm run dev
 visit: http://localhost:3000/
 login using: user1@example.com, password123
 
-
 swagger docs: http://localhost:3000/api-docs

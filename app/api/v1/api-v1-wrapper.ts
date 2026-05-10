@@ -100,10 +100,18 @@ export const ApiV1Wrapper = async (
     }
 
     // Decode the body if any
-    const originalBody = req.body ? await req.json() : {};
-    CustomLogger.t(originalBody, "originalBody");
-    const processedBody = kebabizeKeysAndDecryptIDs(originalBody);
-    CustomLogger.t(processedBody, "processedBody");
+
+    let originalBody = {};
+    let processedBody = {};
+
+    try {
+      originalBody = req.body ? await req.json() : {};
+      CustomLogger.t(originalBody, "originalBody");
+      processedBody = kebabizeKeysAndDecryptIDs(originalBody);
+      CustomLogger.t(processedBody, "processedBody");
+    } catch (err) {
+      CustomLogger.f("Error while processing request body", err);
+    }
 
     const apiV1Request = new ApiV1Request({
       user: decodedAuthToken ? new ApiV1User(decodedAuthToken) : null,
@@ -156,6 +164,8 @@ export const ApiV1Wrapper = async (
         },
       );
     }
+
+    CustomLogger.e(error);
 
     return NextResponse.json(
       {

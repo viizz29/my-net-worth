@@ -17,3 +17,24 @@ export type GetAccountsResponseDto = {
 export type CreateAccountResponseDto = {
   account: AccountListItemDto;
 };
+
+export type AccountDetailsDto = {
+  id: [bigint, bigint];
+  name: string;
+  description: string;
+  type: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
+export type GetAccountResponseDto = {
+  account: AccountDetailsDto;
+};
+
+export type UpdateAccountResponseDto = {
+  account: AccountDetailsDto;
+};
+
+export type DeleteAccountResponseDto = {
+  account: AccountDetailsDto;
+};

@@ -1,4 +1,3 @@
-import { requireAuth } from "@/app/api/_lib/require-auth";
 import { getAccountsForUser } from "./services/get-accounts";
 import { ApiV1Wrapper } from "../../api-v1-wrapper";
 import { NextRequest } from "next/server";
