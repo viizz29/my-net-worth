@@ -1,8 +1,5 @@
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
-import {
-  toGetAccountsResponseDto,
-  type GetAccountsResponseDto,
-} from "../dtos/accounts-response-dto";
+import { type GetAccountsResponseDto } from "../dtos/accounts-response-dto";
 
 export async function getAccountsForUser(
   userId: bigint,
@@ -10,9 +7,14 @@ export async function getAccountsForUser(
   const prisma = getPrismaConnection();
 
   const accounts = await prisma.accounts.findMany({
+    select: {
+      id: true,
+      name: true,
+      description: true,
+    },
     where: { user_id: userId },
     orderBy: { sn: "asc" },
   });
 
-  return toGetAccountsResponseDto(accounts);
+  return accounts;
 }

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { ValidationError } from "yup";
 import { ApiError, type ErrorResponseDto } from "./api-error";
+import { camelizeKeysAndEncryptIDs } from "./camelize-and-kebabize";
+import { GenericObject } from "./general";
 
 type ApiHandler<T> = (request: Request) => Promise<T>;
 
@@ -47,7 +49,11 @@ export function withApiHandler<T>(
 ) {
   return async function routeHandler(request: Request) {
     try {
-      const result = await handler(request);
+      // const result = await handler(request);
+
+      const result = camelizeKeysAndEncryptIDs(
+        (await handler(request)) as GenericObject,
+      );
 
       return NextResponse.json(result, {
         status: options.successStatus ?? 200,

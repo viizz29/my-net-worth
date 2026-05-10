@@ -24,7 +24,8 @@ model users {
   created_at DateTime @default(now()) @map("created_at")
   updated_at DateTime @default(now()) @updatedAt @map("updated_at")
 
-  accounts accounts[]
+  accounts     accounts[]
+  transactions transactions[]
 }
 
 enum account_type {
@@ -43,6 +44,25 @@ model accounts {
   description String
 
   type account_type
+
+  created_at   DateTime       @default(now()) @map("created_at")
+  updated_at   DateTime       @default(now()) @updatedAt @map("updated_at")
+  transactions transactions[]
+
+  @@id([user_id, sn])
+}
+
+model transactions {
+  user_id BigInt
+  user    users  @relation(fields: [user_id], references: [id])
+
+  sn BigInt
+
+  account_sn BigInt
+  account    accounts @relation(fields: [user_id, account_sn], references: [user_id, sn])
+
+  amount  Decimal? @db.Decimal(10, 2)
+  comment String
 
   created_at DateTime @default(now()) @map("created_at")
   updated_at DateTime @default(now()) @updatedAt @map("updated_at")

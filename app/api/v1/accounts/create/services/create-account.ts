@@ -1,9 +1,6 @@
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
 import type { CreateAccountRequestDto } from "../dtos/create-account-request-dto";
-import {
-  toCreateAccountResponseDto,
-  type CreateAccountResponseDto,
-} from "../../get/dtos/accounts-response-dto";
+import { type CreateAccountResponseDto } from "../../get/dtos/accounts-response-dto";
 
 export async function createAccountForUser(
   userId: bigint,
@@ -12,6 +9,10 @@ export async function createAccountForUser(
   const prisma = getPrismaConnection();
 
   const createdAccount = await prisma.accounts.create({
+    select: {
+      id: true,
+      name: true,
+    },
     data: {
       user_id: userId,
       // The database trigger replaces this placeholder with the next per-user sequence.
@@ -22,5 +23,5 @@ export async function createAccountForUser(
     },
   });
 
-  return toCreateAccountResponseDto(createdAccount);
+  return createdAccount;
 }

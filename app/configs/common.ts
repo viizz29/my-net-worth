@@ -1,5 +1,12 @@
 import { PROJECT_LOCATION } from "./base";
 
+export function isValidNumber(value: any) {
+  if (typeof value == "undefined") return false;
+  if (typeof value == "number") return true;
+  const v = Number(value);
+  return typeof v === "number" && !isNaN(v) && isFinite(v);
+}
+
 export const RESOURCES_LOCATION = `${PROJECT_LOCATION}/res`;
 
 export const APP_VERSION = process.env.APP_VERSION
@@ -49,3 +56,7 @@ export const DOCS_URL = process.env.DOCS_URL ? process.env.DOCS_URL : `/docs`;
 export const HASHID_SALT = process.env.HASHID_SALT
   ? process.env.HASHID_SALT
   : `your-salt`;
+
+export const LOG_LEVEL = isValidNumber(process.env.LOG_LEVEL)
+  ? Number(process.env.LOG_LEVEL)
+  : 7;
