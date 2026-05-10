@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { ApiV1Wrapper } from "../../../api-v1-wrapper";
+import { ApiV1Wrapper } from "../../api-v1-wrapper";
 import { parseGetAccountRequestDto } from "./dtos/get-account-request-dto";
 import { getAccountForUser } from "./services/get-account";
 

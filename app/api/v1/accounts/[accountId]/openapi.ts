@@ -1,7 +1,7 @@
-import type { OpenApiRouteSpec } from "../../../../../lib/openapi/types";
+import type { OpenApiRouteSpec } from "../../../../lib/openapi/types";
 
 const getAccountRouteSpec = {
-  path: "/v1/accounts/get/{accountId}",
+  path: "/v1/accounts/{accountId}",
   tags: [
     {
       name: "Accounts",

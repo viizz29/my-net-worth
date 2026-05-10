@@ -1,7 +1,7 @@
-import type { OpenApiRouteSpec } from "../../../../lib/openapi/types";
+import type { OpenApiRouteSpec } from "../../../lib/openapi/types";
 
-const createAccountsRouteSpec = {
-  path: "/v1/accounts/create",
+const getAccountsRouteSpec = {
+  path: "/v1/accounts",
   tags: [
     {
       name: "Accounts",
@@ -9,6 +9,36 @@ const createAccountsRouteSpec = {
     },
   ],
   operations: {
+    get: {
+      tags: ["Accounts"],
+      summary: "Get accounts for the authenticated user",
+      description:
+        "Returns the list of accounts owned by the user identified by the bearer token.",
+      operationId: "getAccountsForAuthenticatedUser",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        "200": {
+          description: "List of accounts owned by the authenticated user",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/GetAccountsResponse",
+              },
+            },
+          },
+        },
+        "401": {
+          description: "Missing or invalid authentication token",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/AccountsErrorResponse",
+              },
+            },
+          },
+        },
+      },
+    },
     post: {
       tags: ["Accounts"],
       summary: "Create an account for the authenticated user",
@@ -71,25 +101,6 @@ const createAccountsRouteSpec = {
   },
   components: {
     schemas: {
-      CreateAccountRequest: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-            example: "Salary",
-          },
-          description: {
-            type: "string",
-            example: "Monthly income account",
-          },
-          type: {
-            type: "string",
-            enum: ["income", "expense"],
-            example: "income",
-          },
-        },
-        required: ["name", "description", "type"],
-      },
       AccountListItem: {
         type: "object",
         properties: {
@@ -135,14 +146,17 @@ const createAccountsRouteSpec = {
           "updatedAt",
         ],
       },
-      CreateAccountResponse: {
+      GetAccountsResponse: {
         type: "object",
         properties: {
-          account: {
-            $ref: "#/components/schemas/AccountListItem",
+          accounts: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/AccountListItem",
+            },
           },
         },
-        required: ["account"],
+        required: ["accounts"],
       },
       AccountsErrorResponse: {
         type: "object",
@@ -172,8 +186,36 @@ const createAccountsRouteSpec = {
         },
         required: ["msg", "data"],
       },
+      CreateAccountRequest: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            example: "Salary",
+          },
+          description: {
+            type: "string",
+            example: "Monthly income account",
+          },
+          type: {
+            type: "string",
+            enum: ["income", "expense"],
+            example: "income",
+          },
+        },
+        required: ["name", "description", "type"],
+      },
+      CreateAccountResponse: {
+        type: "object",
+        properties: {
+          account: {
+            $ref: "#/components/schemas/AccountListItem",
+          },
+        },
+        required: ["account"],
+      },
     },
   },
 } satisfies OpenApiRouteSpec;
 
-export default createAccountsRouteSpec;
+export default getAccountsRouteSpec;

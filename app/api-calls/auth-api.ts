@@ -6,6 +6,23 @@ export const loginApi = async (email: string, password: string) => {
     password,
   });
 
-  return response.data; 
+  return response.data;
   // expected: { token: "...", user: {...} }
+};
+
+interface ApiResponse001 {
+  code: number;
+  msg: string;
+}
+
+interface UserInfo {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export const getUserInfo = async (): Promise<UserInfo> => {
+  const res: { data: ApiResponse001 & { data: UserInfo } } =
+    await api.get("/v1/me");
+  return res.data.data;
 };

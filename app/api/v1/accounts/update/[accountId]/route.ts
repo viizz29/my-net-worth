@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { ApiV1Wrapper } from "../../../api-v1-wrapper";
-import { parseGetAccountRequestDto } from "../../get/[accountId]/dtos/get-account-request-dto";
+import { parseGetAccountRequestDto } from "../../[accountId]/dtos/get-account-request-dto";
 import { parseUpdateAccountRequestDto } from "../dtos/update-account-request-dto";
 import { updateAccountForUser } from "./services/update-account";
 

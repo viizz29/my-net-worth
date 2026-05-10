@@ -1,7 +1,7 @@
 import { AppError } from "@/app/api/_lib/my-error";
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
 import type { UpdateAccountRequestDto } from "../../dtos/update-account-request-dto";
-import type { UpdateAccountResponseDto } from "../../../get/dtos/accounts-response-dto";
+import type { UpdateAccountResponseDto } from "../../../dtos/accounts-response-dto";
 
 export async function updateAccountForUser(
   userId: bigint,

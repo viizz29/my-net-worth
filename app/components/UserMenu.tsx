@@ -1,14 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { logout } from '../actions/auth'
-
+import { useAuth } from '../auth/use-auth'
 interface UserMenuProps {
   name: string
 }
 
 export default function UserMenu({ name }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const { logout } = useAuth();
+
+
 
   return (
     <div className="relative">

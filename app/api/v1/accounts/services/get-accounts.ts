@@ -11,6 +11,7 @@ export async function getAccountsForUser(
       id: true,
       name: true,
       description: true,
+      type: true,
     },
     where: { user_id: userId },
     orderBy: { sn: "asc" },

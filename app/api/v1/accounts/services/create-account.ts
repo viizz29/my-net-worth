@@ -1,6 +1,6 @@
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
 import type { CreateAccountRequestDto } from "../dtos/create-account-request-dto";
-import { type CreateAccountResponseDto } from "../../get/dtos/accounts-response-dto";
+import { type CreateAccountResponseDto } from "../dtos/accounts-response-dto";
 
 export async function createAccountForUser(
   userId: bigint,

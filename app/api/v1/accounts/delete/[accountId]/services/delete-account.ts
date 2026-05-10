@@ -1,7 +1,7 @@
 import { AppError } from "@/app/api/_lib/my-error";
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
 import { Prisma } from "@/app/generated/prisma-client";
-import type { DeleteAccountResponseDto } from "../../../get/dtos/accounts-response-dto";
+import type { DeleteAccountResponseDto } from "../../../dtos/accounts-response-dto";
 
 export async function deleteAccountForUser(
   userId: bigint,
