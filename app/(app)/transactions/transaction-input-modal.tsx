@@ -1,27 +1,27 @@
-import { AccountObject333 } from "@/app/api-calls/account-apis";
+
+import { TransactionInputObject } from "@/app/api-calls/transaction-apis";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
 import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
 
-interface NoteInputModalProps {
+interface TransactionDetailsInputModalProps {
   open: boolean;
-  onSubmit: (data: AccountObject333) => void;
+  onSubmit: (data: TransactionInputObject) => void;
   onClose: () => void;
   title: string;
 }
 
 
-export default function NoteInputModal({ open, onClose, title, onSubmit }: NoteInputModalProps) {
+export default function TransactionDetailsInputModal({ open, onClose, title, onSubmit }: TransactionDetailsInputModalProps) {
   const { t } = useTranslation();
 
-  const fields = ['name', 'description', 'type'];
+  const fields = ['amount', 'comment'];
 
   const validations = {
-    name: Yup.string().required('Account name is required'),
-    description: Yup.string().required('Account description is required'),
-    type: Yup.string().required('Account type is required'),
+    amount: Yup.number().required('Amount is required'),
+    comment: Yup.string().required('Comment is required'),
   };
 
   return (
@@ -36,9 +36,8 @@ export default function NoteInputModal({ open, onClose, title, onSubmit }: NoteI
         fields={fields}
         validationSchema={validations}
         onSubmit={(values) => onSubmit({
-          name: values.name,
-          description: values.description,
-          type: values.type
+          amount: Number(values.amount),
+          comment: values.comment,
         })}
       />
     </GenericModal>

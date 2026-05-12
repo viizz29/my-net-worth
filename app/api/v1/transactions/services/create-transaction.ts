@@ -1,6 +1,6 @@
 import { ApiError } from "@/app/api/_lib/api-error";
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
-import type { CreateTransactionResponseDto } from "../../get/dtos/transactions-response-dto";
+import type { CreateTransactionResponseDto } from "../dtos/transactions-response-dto";
 import { CreateTransactionRequestDto } from "../dtos/create-transaction-request-dto";
 
 export async function createTransactionForUser(

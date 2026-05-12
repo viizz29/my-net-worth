@@ -1,7 +1,7 @@
-import type { OpenApiRouteSpec } from "../../../../lib/openapi/types";
+import type { OpenApiRouteSpec } from "../../../lib/openapi/types";
 
-const createTransactionsRouteSpec = {
-  path: "/v1/transactions/create",
+const getTransactionsRouteSpec = {
+  path: "/v1/transactions",
   tags: [
     {
       name: "Transactions",
@@ -9,6 +9,36 @@ const createTransactionsRouteSpec = {
     },
   ],
   operations: {
+    get: {
+      tags: ["Transactions"],
+      summary: "Get transactions for the authenticated user",
+      description:
+        "Returns the list of transactions owned by the user identified by the bearer token.",
+      operationId: "getTransactionsForAuthenticatedUser",
+      security: [{ bearerAuth: [] }],
+      responses: {
+        "200": {
+          description: "List of transactions owned by the authenticated user",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/GetTransactionsResponse",
+              },
+            },
+          },
+        },
+        "401": {
+          description: "Missing or invalid authentication token",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/TransactionsErrorResponse",
+              },
+            },
+          },
+        },
+      },
+    },
     post: {
       tags: ["Transactions"],
       summary: "Create a transaction for the authenticated user",
@@ -81,25 +111,6 @@ const createTransactionsRouteSpec = {
   },
   components: {
     schemas: {
-      CreateTransactionRequest: {
-        type: "object",
-        properties: {
-          accountId: {
-            type: "string",
-            example: "495048525151534953",
-          },
-          amount: {
-            type: "number",
-            format: "float",
-            example: 1250.5,
-          },
-          comment: {
-            type: "string",
-            example: "May salary credited",
-          },
-        },
-        required: ["accountId", "amount", "comment"],
-      },
       TransactionListItem: {
         type: "object",
         properties: {
@@ -154,14 +165,17 @@ const createTransactionsRouteSpec = {
           "updatedAt",
         ],
       },
-      CreateTransactionResponse: {
+      GetTransactionsResponse: {
         type: "object",
         properties: {
-          transaction: {
-            $ref: "#/components/schemas/TransactionListItem",
+          transactions: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/TransactionListItem",
+            },
           },
         },
-        required: ["transaction"],
+        required: ["transactions"],
       },
       TransactionsErrorResponse: {
         type: "object",
@@ -191,8 +205,36 @@ const createTransactionsRouteSpec = {
         },
         required: ["msg", "data"],
       },
+      CreateTransactionRequest: {
+        type: "object",
+        properties: {
+          accountId: {
+            type: "string",
+            example: "495048525151534953",
+          },
+          amount: {
+            type: "number",
+            format: "float",
+            example: 1250.5,
+          },
+          comment: {
+            type: "string",
+            example: "May salary credited",
+          },
+        },
+        required: ["accountId", "amount", "comment"],
+      },
+      CreateTransactionResponse: {
+        type: "object",
+        properties: {
+          transaction: {
+            $ref: "#/components/schemas/TransactionListItem",
+          },
+        },
+        required: ["transaction"],
+      },
     },
   },
 } satisfies OpenApiRouteSpec;
 
-export default createTransactionsRouteSpec;
+export default getTransactionsRouteSpec;

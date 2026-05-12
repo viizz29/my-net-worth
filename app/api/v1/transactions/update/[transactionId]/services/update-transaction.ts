@@ -1,6 +1,6 @@
 import { AppError } from "@/app/api/_lib/my-error";
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
-import type { UpdateTransactionResponseDto } from "../../../get/dtos/transactions-response-dto";
+import type { UpdateTransactionResponseDto } from "../../../dtos/transactions-response-dto";
 import type { UpdateTransactionRequestDto } from "../../dtos/update-transaction-request-dto";
 
 export async function updateTransactionForUser(

@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { ApiV1Wrapper } from "../../../api-v1-wrapper";
-import { parseGetTransactionRequestDto } from "../../get/[transactionId]/dtos/get-transaction-request-dto";
+import { parseGetTransactionRequestDto } from "../../[transactionId]/dtos/get-transaction-request-dto";
 import { parseUpdateTransactionRequestDto } from "../dtos/update-transaction-request-dto";
 import { updateTransactionForUser } from "./services/update-transaction";
 

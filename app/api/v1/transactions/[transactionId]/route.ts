@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { ApiV1Wrapper } from "../../../api-v1-wrapper";
+import { ApiV1Wrapper } from "../../api-v1-wrapper";
 import { parseGetTransactionRequestDto } from "./dtos/get-transaction-request-dto";
 import { getTransactionForUser } from "./services/get-transaction";
 

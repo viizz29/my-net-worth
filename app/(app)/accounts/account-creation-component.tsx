@@ -2,7 +2,7 @@
 
 import { AccountObject333, createAccount } from "@/app/api-calls/account-apis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import NoteInputModal from "./note-input-modal";
+import AccountDetailsInputModal from "./account-details-input-modal";
 import { useState } from "react";
 import { Button } from "@mui/material";
 
@@ -30,7 +30,7 @@ export default function AccountCreationComponent() {
     <div>
       <Button onClick={() => setNoteInputModalOpen(true)}>Create New Account</Button>
 
-      <NoteInputModal open={noteInputModalOpen} onClose={() => setNoteInputModalOpen(false)} onSubmit={handleNoteCreation} title={"Create New Account"} />
+      <AccountDetailsInputModal open={noteInputModalOpen} onClose={() => setNoteInputModalOpen(false)} onSubmit={handleNoteCreation} title={"Create New Account"} />
     </div>
   );
 

@@ -1,4 +1,4 @@
-import type { OpenApiRouteSpec } from "../../../../../lib/openapi/types";
+import type { OpenApiRouteSpec } from "../../../../lib/openapi/types";
 
 const getTransactionRouteSpec = {
   path: "/v1/transactions/get/{transactionId}",
