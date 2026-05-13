@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
 
-interface NoteEditingModalProps {
+interface AccountEditingModalProps {
   account: AccountObject333 | null;
   onSubmit: (account: AccountObject333, newData: NewAccountInfo) => void;
   onClose: () => void;
@@ -13,7 +13,7 @@ interface NoteEditingModalProps {
 }
 
 
-export default function NoteEditingModal({ account, onClose, title, onSubmit }: NoteEditingModalProps) {
+export default function AccountEditingModal({ account, onClose, title, onSubmit }: AccountEditingModalProps) {
   const { t } = useTranslation();
 
   const fields = ['name', 'description', 'type'];

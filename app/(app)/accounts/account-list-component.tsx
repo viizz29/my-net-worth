@@ -1,6 +1,6 @@
 "use client"
 
-import { AccountObject333, deleteAccount, getAccountList } from "@/app/api-calls/account-apis";
+import { AccountObject333, deleteAccount, getAccountList, NewAccountInfo, updateAccount } from "@/app/api-calls/account-apis";
 import { Box, Button } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import AccountDeletionModal from "./account-deletion-confirmation-modal";
 import { useState } from "react";
-import NoteEditingModal from "./note-editing-modal";
+import AccountEditingModal from "./note-editing-modal";
 
 
 export default function AccountListComponent() {
@@ -39,10 +39,10 @@ export default function AccountListComponent() {
   });
 
 
-  const updateDataNodeMutation = useMutation({
-    mutationFn: (dataNode: AccountObject333) => updateDataNode(dataNode.id, dataNode.note),
+  const updateAccountDetailsMutation = useMutation({
+    mutationFn: (data: { id: string, newData: NewAccountInfo }) => updateAccount(data.id, data.newData),
     onSuccess: (_data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["data-nodes", variables.parentId] });
+      queryClient.invalidateQueries({ queryKey: ["account-list"] });
     },
   });
 
@@ -54,9 +54,9 @@ export default function AccountListComponent() {
 
 
 
-  const handleNoteEditingStep2 = (dataNode: AccountObject333, note: string) => {
-    updateDataNodeMutation.mutate({ ...dataNode, note });
-    setNoteToEdit(null);
+  const handleAccountEditingStep2 = (account: AccountObject333, newData: NewAccountInfo) => {
+    updateAccountDetailsMutation.mutate({ id: account.id, newData });
+    setAccountToEdit(null);
   };
 
   const fields = ["id", "name", "type"]
@@ -115,7 +115,7 @@ export default function AccountListComponent() {
 
                     <TableCell key={"Actions"}>
                       <Button onClick={() => setAccountToDelete(row)}>Delete</Button>
-                      <Button>Edit</Button>
+                      <Button onClick={() => setAccountToEdit(row)}>Edit</Button>
                     </TableCell>
                   </TableRow>
 
@@ -137,7 +137,7 @@ export default function AccountListComponent() {
 
 
       <AccountDeletionModal account={accountToDelete} onCancel={() => setAccountToDelete(null)} onSubmit={handleAccountDeletionStep2} />
-      <NoteEditingModal account={accountToEdit} onClose={() => setAccountToEdit(null)} onSubmit={handleNoteEditingStep2} title={"Edit Account"} />
+      <AccountEditingModal account={accountToEdit} onClose={() => setAccountToEdit(null)} onSubmit={handleAccountEditingStep2} title={"Edit Account"} />
     </Box>
   );
 
