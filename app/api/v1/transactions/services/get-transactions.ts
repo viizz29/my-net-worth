@@ -19,5 +19,5 @@ export async function getTransactionsForUser(
     orderBy: { sn: "desc" },
   });
 
-  return { transactions };
+  return transactions;
 }

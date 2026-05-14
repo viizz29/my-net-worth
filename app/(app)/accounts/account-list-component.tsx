@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import AccountDeletionModal from "./account-deletion-confirmation-modal";
 import { useState } from "react";
-import AccountEditingModal from "./note-editing-modal";
+import AccountEditingModal from "./account-editing-modal";
 
 
 export default function AccountListComponent() {

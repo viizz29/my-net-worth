@@ -8,29 +8,29 @@ import { createTransaction, TransactionInputObject } from "@/app/api-calls/trans
 
 export default function TransactionCreationComponent() {
 
-  const [noteInputModalOpen, setNoteInputModalOpen] = useState(false);
+  const [transactionInputModalOpen, setTransactionInputModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const createDataNodeMutation = useMutation({
+  const createTransactionMutation = useMutation({
     mutationFn: createTransaction,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["account-list"] });
+      queryClient.invalidateQueries({ queryKey: ["transaction-list"] });
     },
   });
 
 
-  const handleNoteCreation = (data: TransactionInputObject) => {
-    createDataNodeMutation.mutate(data);
-    setNoteInputModalOpen(false);
+  const handleTransactionCreation = (data: TransactionInputObject) => {
+    createTransactionMutation.mutate(data);
+    setTransactionInputModalOpen(false);
   };
 
 
 
   return (
     <div>
-      <Button onClick={() => setNoteInputModalOpen(true)}>Create New Transaction</Button>
+      <Button onClick={() => setTransactionInputModalOpen(true)}>Create New Transaction</Button>
 
-      <TransactionDetailsInputModal open={noteInputModalOpen} onClose={() => setNoteInputModalOpen(false)} onSubmit={handleNoteCreation} title={"Create New Transaction"} />
+      <TransactionDetailsInputModal open={transactionInputModalOpen} onClose={() => setTransactionInputModalOpen(false)} onSubmit={handleTransactionCreation} title={"Create New Transaction"} />
     </div>
   );
 

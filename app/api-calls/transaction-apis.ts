@@ -1,6 +1,7 @@
 import api from "./client";
 
 export interface TransactionInputObject {
+  accountId: string;
   amount: number;
   comment: string;
 }
@@ -24,7 +25,10 @@ export const deleteTransaction = async (id: string) => {
   return res.data;
 };
 
-export const updateTransaction = async (id: string, note: string) => {
-  const res = await api.patch(`/v1/transactions/${id}`, { note });
+export const updateTransaction = async (
+  id: string,
+  info: TransactionInputObject,
+) => {
+  const res = await api.patch(`/v1/transactions/${id}`, info);
   return res.data;
 };

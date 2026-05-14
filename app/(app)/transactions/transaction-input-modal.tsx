@@ -1,7 +1,10 @@
 
+import { getAccountList } from "@/app/api-calls/account-apis";
 import { TransactionInputObject } from "@/app/api-calls/transaction-apis";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
@@ -17,12 +20,34 @@ interface TransactionDetailsInputModalProps {
 export default function TransactionDetailsInputModal({ open, onClose, title, onSubmit }: TransactionDetailsInputModalProps) {
   const { t } = useTranslation();
 
-  const fields = ['amount', 'comment'];
+  const [accounts, setAccounts] = useState<{ label: string, value: string }[]>([]);
+
+
+
+
+  const { data: accountList } = useQuery({
+    queryKey: ["account-list"],
+    queryFn: getAccountList,
+    enabled: open,
+  });
+
+
+  useEffect(() => {
+    if (accountList && accountList.length > 0) {
+      setAccounts(accountList.map((item) => ({ label: item.name, value: item.id })));
+    }
+  }, [accountList]);
+
+
+  const fields = [{
+    name: 'account', type: 'select', options: accounts
+  }, 'amount', 'comment'];
 
   const validations = {
     amount: Yup.number().required('Amount is required'),
     comment: Yup.string().required('Comment is required'),
   };
+
 
   return (
 
@@ -36,6 +61,7 @@ export default function TransactionDetailsInputModal({ open, onClose, title, onS
         fields={fields}
         validationSchema={validations}
         onSubmit={(values) => onSubmit({
+          accountId: values.account,
           amount: Number(values.amount),
           comment: values.comment,
         })}
