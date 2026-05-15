@@ -2,9 +2,27 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+import { cn } from '@/app/lib/utils'
+
+const navItems = [
+  { href: '/', label: 'Home', icon: 'H' },
+  { href: '/accounts', label: 'Accounts', icon: 'A' },
+  { href: '/transactions', label: 'Transactions', icon: 'T' },
+]
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const pathname = usePathname()
+
+  const isActivePath = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`)
+  }
 
   return (
     <aside
@@ -24,20 +42,34 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex flex-col gap-2">
+        {navItems.map(({ href, label, icon }) => {
+          const isActive = isActivePath(href)
 
-        <Link href="/" title="Accounts" className="flex items-center gap-4 rounded p-2 text-foreground transition-colors hover:bg-muted">
-          <div className="w-6 flex justify-center font-bold text-muted-foreground">H</div>
-          {!isCollapsed && <span className="whitespace-nowrap text-sm font-medium">Home</span>}
-        </Link>
-
-        <Link href="/accounts" title="Accounts" className="flex items-center gap-4 rounded p-2 text-foreground transition-colors hover:bg-muted">
-          <div className="w-6 flex justify-center font-bold text-muted-foreground">A</div>
-          {!isCollapsed && <span className="whitespace-nowrap text-sm font-medium">Accounts</span>}
-        </Link>
-        <Link href="/transactions" title="Transactions" className="flex items-center gap-4 rounded p-2 text-foreground transition-colors hover:bg-muted">
-          <div className="w-6 flex justify-center font-bold text-muted-foreground">T</div>
-          {!isCollapsed && <span className="whitespace-nowrap text-sm font-medium">Transactions</span>}
-        </Link>
+          return (
+            <Link
+              key={href}
+              href={href}
+              title={label}
+              aria-current={isActive ? 'page' : undefined}
+              className={cn(
+                'flex items-center gap-4 rounded p-2 transition-colors',
+                isActive
+                  ? 'bg-muted font-medium text-foreground'
+                  : 'text-foreground hover:bg-muted'
+              )}
+            >
+              <div
+                className={cn(
+                  'w-6 flex justify-center font-bold transition-colors',
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                )}
+              >
+                {icon}
+              </div>
+              {!isCollapsed && <span className="whitespace-nowrap text-sm font-medium">{label}</span>}
+            </Link>
+          )
+        })}
       </nav>
     </aside>
   )
