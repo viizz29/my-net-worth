@@ -27,8 +27,27 @@ export default function AccountCreationComponent() {
 
 
   return (
-    <div>
-      <Button onClick={() => setNoteInputModalOpen(true)}>Create New Account</Button>
+    <div className="flex justify-end">
+      <Button
+        variant="contained"
+        onClick={() => setNoteInputModalOpen(true)}
+        sx={{
+          borderRadius: "0.75rem",
+          px: 2,
+          py: 1,
+          backgroundColor: "var(--color-primary)",
+          color: "var(--color-primary-foreground)",
+          boxShadow: "none",
+          textTransform: "none",
+          "&:hover": {
+            backgroundColor: "var(--color-primary)",
+            filter: "brightness(0.95)",
+            boxShadow: "none",
+          },
+        }}
+      >
+        Create New Account
+      </Button>
 
       <AccountDetailsInputModal open={noteInputModalOpen} onClose={() => setNoteInputModalOpen(false)} onSubmit={handleNoteCreation} title={"Create New Account"} />
     </div>

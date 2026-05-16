@@ -71,7 +71,7 @@ export default function DynamicForm({
     <Box
       component="form"
       onSubmit={formik.handleSubmit}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2, color: 'var(--color-foreground)' }}
     >
       {normalizedFields.map((field, index) => {
         const fieldError = formik.touched[field.name] ? formik.errors[field.name] : undefined;
@@ -102,7 +102,25 @@ export default function DynamicForm({
         );
       })}
 
-      <Button type="submit" variant="contained">
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{
+          alignSelf: 'flex-start',
+          borderRadius: '0.75rem',
+          px: 2.5,
+          py: 1,
+          backgroundColor: 'var(--color-primary)',
+          color: 'var(--color-primary-foreground)',
+          textTransform: 'none',
+          boxShadow: 'none',
+          '&:hover': {
+            backgroundColor: 'var(--color-primary)',
+            filter: 'brightness(0.95)',
+            boxShadow: 'none',
+          },
+        }}
+      >
         Submit
       </Button>
     </Box>

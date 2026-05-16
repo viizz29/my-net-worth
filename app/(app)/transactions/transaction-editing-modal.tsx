@@ -4,8 +4,6 @@ import { Transaction333, TransactionInputObject } from "@/app/api-calls/transact
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
 
@@ -18,17 +16,12 @@ interface TransactionEditingModalProps {
 
 
 export default function TransactionEditingModal({ transaction, onClose, title, onSubmit }: TransactionEditingModalProps) {
-  const { t } = useTranslation();
-
-
-  const [accounts, setAccounts] = useState<{ label: string, value: string }[]>([]);
-
-
   const { data: accountList } = useQuery({
     queryKey: ["account-list"],
     queryFn: getAccountList,
     enabled: transaction != null,
   });
+  const accounts = (accountList ?? []).map((item) => ({ label: item.name, value: item.id }));
 
 
   const fields = [{
@@ -39,13 +32,6 @@ export default function TransactionEditingModal({ transaction, onClose, title, o
     amount: Yup.number().required('Amount is required'),
     comment: Yup.string().required('Comment is required'),
   };
-
-
-  useEffect(() => {
-    if (accountList && accountList.length > 0) {
-      setAccounts(accountList.map((item) => ({ label: item.name, value: item.id })));
-    }
-  }, [accountList]);
 
   return (
 

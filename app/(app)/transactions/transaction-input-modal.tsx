@@ -4,8 +4,6 @@ import { TransactionInputObject } from "@/app/api-calls/transaction-apis";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
 
@@ -18,25 +16,12 @@ interface TransactionDetailsInputModalProps {
 
 
 export default function TransactionDetailsInputModal({ open, onClose, title, onSubmit }: TransactionDetailsInputModalProps) {
-  const { t } = useTranslation();
-
-  const [accounts, setAccounts] = useState<{ label: string, value: string }[]>([]);
-
-
-
-
   const { data: accountList } = useQuery({
     queryKey: ["account-list"],
     queryFn: getAccountList,
     enabled: open,
   });
-
-
-  useEffect(() => {
-    if (accountList && accountList.length > 0) {
-      setAccounts(accountList.map((item) => ({ label: item.name, value: item.id })));
-    }
-  }, [accountList]);
+  const accounts = (accountList ?? []).map((item) => ({ label: item.name, value: item.id }));
 
 
   const fields = [{

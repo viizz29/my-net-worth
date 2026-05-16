@@ -66,6 +66,32 @@ const DynamicField = <T,>({
   const [error, setError] = useState<string | null>(null);
   const hasError = externalError || !!error;
   const displayedHelperText = error ?? externalHelperText;
+  const themedFieldSx = {
+    "& .MuiInputLabel-root": {
+      color: "var(--color-muted-foreground)",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "var(--color-foreground)",
+    },
+    "& .MuiOutlinedInput-root": {
+      color: "var(--color-foreground)",
+      backgroundColor: "color-mix(in srgb, var(--color-muted) 45%, transparent)",
+      borderRadius: "0.875rem",
+      "& fieldset": {
+        borderColor: "var(--color-border)",
+      },
+      "&:hover fieldset": {
+        borderColor: "var(--color-muted-foreground)",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "var(--color-primary)",
+      },
+    },
+    "& .MuiFormHelperText-root": {
+      color: "var(--color-muted-foreground)",
+      marginLeft: 0,
+    },
+  } as const;
 
   const handleChange = async (newValue: T) => {
     if (validationSchema) {
@@ -95,6 +121,7 @@ const DynamicField = <T,>({
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
+          sx={themedFieldSx}
         />
       );
 
@@ -111,6 +138,7 @@ const DynamicField = <T,>({
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
+          sx={themedFieldSx}
         />
       );
 
@@ -128,12 +156,13 @@ const DynamicField = <T,>({
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
+          sx={themedFieldSx}
         />
       );
 
     case "select":
       return (
-        <FormControl fullWidth error={hasError}>
+        <FormControl fullWidth error={hasError} sx={themedFieldSx}>
           <InputLabel>{label}</InputLabel>
           <Select
             name={name}
@@ -141,6 +170,17 @@ const DynamicField = <T,>({
             label={label}
             onChange={(e) => handleChange(e.target.value)}
             onBlur={() => onBlur?.()}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  mt: 1,
+                  border: "1px solid var(--color-border)",
+                  backgroundColor: "var(--color-background)",
+                  color: "var(--color-foreground)",
+                  backgroundImage: "none",
+                },
+              },
+            }}
           >
             {options.map((opt) => (
               <MenuItem key={opt.value} value={opt.value}>
@@ -154,7 +194,16 @@ const DynamicField = <T,>({
 
     case "range":
       return (
-        <FormControl fullWidth error={hasError}>
+        <FormControl
+          fullWidth
+          error={hasError}
+          sx={{
+            "& .MuiFormHelperText-root": {
+              color: "var(--color-muted-foreground)",
+              marginLeft: 0,
+            },
+          }}
+        >
           <Slider
             name={name}
             value={Number(value) || 0}
@@ -163,6 +212,13 @@ const DynamicField = <T,>({
             step={step}
             onChange={(_, val) => handleChange(val)}
             valueLabelDisplay="auto"
+            sx={{
+              color: "var(--color-primary)",
+              "& .MuiSlider-valueLabel": {
+                backgroundColor: "var(--color-foreground)",
+                color: "var(--color-background)",
+              },
+            }}
           />
           <FormHelperText>{displayedHelperText}</FormHelperText>
         </FormControl>
@@ -170,7 +226,15 @@ const DynamicField = <T,>({
 
     case "boolean":
       return (
-        <FormControl error={hasError}>
+        <FormControl
+          error={hasError}
+          sx={{
+            "& .MuiFormHelperText-root": {
+              color: "var(--color-muted-foreground)",
+              marginLeft: 0,
+            },
+          }}
+        >
           <FormControlLabel
             control={
               <Switch
@@ -178,9 +242,18 @@ const DynamicField = <T,>({
                 checked={Boolean(value)}
                 onChange={(e) => handleChange(e.target.checked)}
                 onBlur={() => onBlur?.()}
+                sx={{
+                  "& .MuiSwitch-switchBase.Mui-checked": {
+                    color: "var(--color-primary)",
+                  },
+                  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                    backgroundColor: "var(--color-primary)",
+                  },
+                }}
               />
             }
             label={label}
+            sx={{ color: "var(--color-foreground)" }}
           />
           <FormHelperText>{displayedHelperText}</FormHelperText>
         </FormControl>

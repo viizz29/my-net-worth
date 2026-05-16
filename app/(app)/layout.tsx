@@ -9,11 +9,13 @@ export default function AppShellLayout({
 }) {
   return (
     <PrivateRoute>
-      <div className="flex min-h-screen bg-white transition-colors duration-300 dark:bg-slate-950">
+      <div className="flex min-h-screen bg-background text-foreground transition-colors duration-300">
         <Sidebar />
         <div className="flex flex-1 flex-col">
           <Header />
-          <main className="p-6 text-slate-900 dark:text-slate-100">{children}</main>
+          <main className="flex-1 bg-background p-6 text-foreground transition-colors duration-300">
+            {children}
+          </main>
         </div>
       </div>
     </PrivateRoute>

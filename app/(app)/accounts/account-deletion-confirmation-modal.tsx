@@ -4,7 +4,6 @@
 
 import { AccountObject333 } from "@/app/api-calls/account-apis";
 import ConfirmModal from "@/app/components/modals/confirmation-modal";
-import { useTranslation } from "react-i18next";
 
 
 
@@ -16,8 +15,6 @@ interface AccountDeletionModalProps {
 
 
 export default function AccountDeletionModal({ account, onCancel, onSubmit }: AccountDeletionModalProps) {
-  const { t } = useTranslation();
-
   return (
 
     account &&

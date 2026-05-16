@@ -1,7 +1,6 @@
 import { AccountObject333 } from "@/app/api-calls/account-apis";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
-import { useTranslation } from "react-i18next";
 import * as Yup from 'yup';
 
 
@@ -14,8 +13,6 @@ interface AccountDetailsInputModalProps {
 
 
 export default function AccountDetailsInputModal({ open, onClose, title, onSubmit }: AccountDetailsInputModalProps) {
-  const { t } = useTranslation();
-
   const fields = ['name', 'description', 'type'];
 
   const validations = {
