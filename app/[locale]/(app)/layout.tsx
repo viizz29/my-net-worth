@@ -1,6 +1,6 @@
 import Sidebar from "@/app/components/Sidebar";
 import Header from "@/app/components/Header";
-import { PrivateRoute } from "../auth/auth-route";
+import { PrivateRoute } from "../../auth/auth-route";
 
 export default function AppShellLayout({
   children,

@@ -21,14 +21,13 @@ export const AuthRoute = ({ children }: { children: ReactNode }) => {
   return user ? null : children;
 };
 
-
 export const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const { user, isAuthReady } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (isAuthReady && !user) {
-      router.replace("/login");
+      router.replace("/en/login");
     }
   }, [isAuthReady, router, user]);
 
