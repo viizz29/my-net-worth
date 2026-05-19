@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Box, Button } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -14,15 +14,24 @@ import {
 } from "@mui/material";
 
 import { useState } from "react";
-import { deleteTransaction, getTransactionList, Transaction333, TransactionInputObject, updateTransaction } from "@/app/api-calls/transaction-apis";
+import { useTranslations } from "next-intl";
+import {
+  deleteTransaction,
+  getTransactionList,
+  Transaction333,
+  TransactionInputObject,
+  updateTransaction,
+} from "@/app/api-calls/transaction-apis";
 import TransactionDeletionModal from "./transaction-deletion-confirmation-modal";
 import TransactionEditingModal from "./transaction-editing-modal";
 
-
 export default function TransactionListComponent() {
+  const t = useTranslations("transactionsPage");
 
-  const [transactionToDelete, setTransactionToDelete] = useState<Transaction333 | null>(null);
-  const [transactionToEdit, setTransactionToEdit] = useState<Transaction333 | null>(null);
+  const [transactionToDelete, setTransactionToDelete] =
+    useState<Transaction333 | null>(null);
+  const [transactionToEdit, setTransactionToEdit] =
+    useState<Transaction333 | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -31,7 +40,6 @@ export default function TransactionListComponent() {
     queryFn: getTransactionList,
   });
 
-
   const deleteTransactionMutation = useMutation({
     mutationFn: (account: Transaction333) => deleteTransaction(account.id),
     onSuccess: () => {
@@ -39,28 +47,33 @@ export default function TransactionListComponent() {
     },
   });
 
-
   const updateTransactionDetailsMutation = useMutation({
-    mutationFn: (data: { id: string, newData: TransactionInputObject }) => updateTransaction(data.id, data.newData),
+    mutationFn: (data: { id: string; newData: TransactionInputObject }) =>
+      updateTransaction(data.id, data.newData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transaction-list"] });
     },
   });
-
 
   const handleAccountDeletionStep2 = (account: Transaction333) => {
     deleteTransactionMutation.mutate(account);
     setTransactionToDelete(null);
   };
 
-
-
-  const handleAccountEditingStep2 = (account: Transaction333, newData: TransactionInputObject) => {
+  const handleAccountEditingStep2 = (
+    account: Transaction333,
+    newData: TransactionInputObject,
+  ) => {
     updateTransactionDetailsMutation.mutate({ id: account.id, newData });
     setTransactionToEdit(null);
   };
 
-  const fields = ["id", "accountId", "amount", "comment"]
+  const fields: Array<{ key: keyof Transaction333; label: string }> = [
+    { key: "id", label: t("field.id") },
+    { key: "accountId", label: t("field.accountId") },
+    { key: "amount", label: t("field.amount") },
+    { key: "comment", label: t("field.comment") },
+  ];
   const transactions = transactionList ?? [];
   const hasTransactions = transactions.length > 0;
 
@@ -73,9 +86,13 @@ export default function TransactionListComponent() {
     <Box sx={{ color: "var(--color-foreground)" }}>
       <div className="space-y-4">
         <div className="space-y-1">
-          <h3 className="text-xl font-semibold text-foreground">Transaction List</h3>
+          <h3 className="text-xl font-semibold text-foreground">
+            {t("transactionList")}
+          </h3>
           <p className="text-sm text-muted-foreground">
-            {hasTransactions ? `${transactions.length} transaction${transactions.length === 1 ? "" : "s"} recorded.` : "No transactions yet."}
+            {hasTransactions
+              ? t("transactionsAvailable", { count: transactions.length })
+              : t("noTransactionsYet")}
           </p>
         </div>
 
@@ -93,21 +110,22 @@ export default function TransactionListComponent() {
         >
           <Table size="small">
             <TableHead>
-              <TableRow sx={{ backgroundColor: "color-mix(in srgb, var(--color-muted) 70%, transparent)" }}>
-
-                <TableCell
-                  key={"SN"}
-                  sx={{ ...tableCellSx, fontWeight: 600 }}
-                >
-                  SN
+              <TableRow
+                sx={{
+                  backgroundColor:
+                    "color-mix(in srgb, var(--color-muted) 70%, transparent)",
+                }}
+              >
+                <TableCell key={"SN"} sx={{ ...tableCellSx, fontWeight: 600 }}>
+                  {t("serialNumber")}
                 </TableCell>
 
                 {fields.map((field) => (
                   <TableCell
-                    key={String(field)}
-                    sx={{ ...tableCellSx, fontWeight: 600, textTransform: "capitalize" }}
+                    key={String(field.key)}
+                    sx={{ ...tableCellSx, fontWeight: 600 }}
                   >
-                    {String(field)}
+                    {field.label}
                   </TableCell>
                 ))}
 
@@ -115,7 +133,7 @@ export default function TransactionListComponent() {
                   key={"Actions"}
                   sx={{ ...tableCellSx, fontWeight: 600 }}
                 >
-                  Actions
+                  {t("actions")}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -129,7 +147,8 @@ export default function TransactionListComponent() {
                     sx={{
                       "&:last-child td": { borderBottom: "none" },
                       "&.MuiTableRow-hover:hover": {
-                        backgroundColor: "color-mix(in srgb, var(--color-muted) 55%, transparent)",
+                        backgroundColor:
+                          "color-mix(in srgb, var(--color-muted) 55%, transparent)",
                       },
                     }}
                   >
@@ -138,8 +157,8 @@ export default function TransactionListComponent() {
                     </TableCell>
 
                     {fields.map((field) => (
-                      <TableCell key={String(field)} sx={tableCellSx}>
-                        {String(row[field])}
+                      <TableCell key={String(field.key)} sx={tableCellSx}>
+                        {String(row[field.key])}
                       </TableCell>
                     ))}
 
@@ -149,22 +168,32 @@ export default function TransactionListComponent() {
                         color="error"
                         sx={{ textTransform: "none" }}
                       >
-                        Delete
+                        {t("delete")}
                       </Button>
                       <Button
                         onClick={() => setTransactionToEdit(row)}
-                        sx={{ color: "var(--color-primary)", textTransform: "none" }}
+                        sx={{
+                          color: "var(--color-primary)",
+                          textTransform: "none",
+                        }}
                       >
-                        Edit
+                        {t("edit")}
                       </Button>
                     </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={fields.length + 2} align="center" sx={tableCellSx}>
-                    <Typography variant="body2" sx={{ color: "var(--color-muted-foreground)" }}>
-                      No transactions available yet.
+                  <TableCell
+                    colSpan={fields.length + 2}
+                    align="center"
+                    sx={tableCellSx}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "var(--color-muted-foreground)" }}
+                    >
+                      {t("noTransactionsAvailableYet")}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -174,10 +203,17 @@ export default function TransactionListComponent() {
         </TableContainer>
       </div>
 
-
-      <TransactionDeletionModal transaction={transactionToDelete} onCancel={() => setTransactionToDelete(null)} onSubmit={handleAccountDeletionStep2} />
-      <TransactionEditingModal transaction={transactionToEdit} onClose={() => setTransactionToEdit(null)} onSubmit={handleAccountEditingStep2} title={"Edit Transaction"} />
+      <TransactionDeletionModal
+        transaction={transactionToDelete}
+        onCancel={() => setTransactionToDelete(null)}
+        onSubmit={handleAccountDeletionStep2}
+      />
+      <TransactionEditingModal
+        transaction={transactionToEdit}
+        onClose={() => setTransactionToEdit(null)}
+        onSubmit={handleAccountEditingStep2}
+        title={t("editTransaction")}
+      />
     </Box>
   );
-
 }

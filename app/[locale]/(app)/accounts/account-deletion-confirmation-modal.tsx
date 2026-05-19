@@ -1,11 +1,6 @@
-
-
-
-
 import { AccountObject333 } from "@/app/api-calls/account-apis";
+import { useTranslations } from "next-intl";
 import ConfirmModal from "@/app/components/modals/confirmation-modal";
-
-
 
 interface AccountDeletionModalProps {
   account: AccountObject333 | null;
@@ -13,12 +8,24 @@ interface AccountDeletionModalProps {
   onCancel: () => void;
 }
 
+export default function AccountDeletionModal({
+  account,
+  onCancel,
+  onSubmit,
+}: AccountDeletionModalProps) {
+  const t = useTranslations("accountsPage");
 
-export default function AccountDeletionModal({ account, onCancel, onSubmit }: AccountDeletionModalProps) {
   return (
-
-    account &&
-    <ConfirmModal open={account !== null} message={`Are you sure you want to delete this account '${account.name}'`} onConfirm={() => onSubmit(account)} onCancel={onCancel} />
-
+    account && (
+      <ConfirmModal
+        open={account !== null}
+        title={t("deleteConfirmationTitle")}
+        message={t("deleteConfirmationMessage", { name: account.name })}
+        onConfirm={() => onSubmit(account)}
+        onCancel={onCancel}
+        cancelLabel={t("cancel")}
+        confirmLabel={t("yes")}
+      />
+    )
   );
 }

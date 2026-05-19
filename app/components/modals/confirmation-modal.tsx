@@ -4,16 +4,27 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from '@mui/material';
+} from "@mui/material";
 
 type ConfirmModalProps = {
   open: boolean;
+  title?: string;
   message: string;
   onConfirm: () => void;
   onCancel: () => void;
+  cancelLabel?: string;
+  confirmLabel?: string;
 };
 
-export default function ConfirmModal({ open, message, onConfirm, onCancel }: ConfirmModalProps) {
+export default function ConfirmModal({
+  open,
+  title,
+  message,
+  onConfirm,
+  onCancel,
+  cancelLabel = "Cancel",
+  confirmLabel = "Yes",
+}: ConfirmModalProps) {
   return (
     <Dialog
       open={open}
@@ -30,18 +41,24 @@ export default function ConfirmModal({ open, message, onConfirm, onCancel }: Con
         },
       }}
     >
-      <DialogTitle sx={{ borderBottom: "1px solid var(--color-border)", fontWeight: 700 }}>
-        Confirm
+      <DialogTitle
+        sx={{ borderBottom: "1px solid var(--color-border)", fontWeight: 700 }}
+      >
+        {title ?? "Confirm"}
       </DialogTitle>
 
-      <DialogContent sx={{ pt: 3, color: "var(--color-foreground)" }}>{message}</DialogContent>
+      <DialogContent sx={{ pt: 3, color: "var(--color-foreground)" }}>
+        {message}
+      </DialogContent>
 
-      <DialogActions sx={{ borderTop: "1px solid var(--color-border)", px: 3, py: 2 }}>
+      <DialogActions
+        sx={{ borderTop: "1px solid var(--color-border)", px: 3, py: 2 }}
+      >
         <Button
           onClick={onCancel}
           sx={{ color: "var(--color-muted-foreground)", textTransform: "none" }}
         >
-          Cancel
+          {cancelLabel}
         </Button>
         <Button
           onClick={onConfirm}
@@ -57,7 +74,7 @@ export default function ConfirmModal({ open, message, onConfirm, onCancel }: Con
             },
           }}
         >
-          Yes
+          {confirmLabel}
         </Button>
       </DialogActions>
     </Dialog>

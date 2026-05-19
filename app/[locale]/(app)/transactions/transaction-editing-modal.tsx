@@ -1,63 +1,84 @@
-
 import { getAccountList } from "@/app/api-calls/account-apis";
-import { Transaction333, TransactionInputObject } from "@/app/api-calls/transaction-apis";
+import {
+  Transaction333,
+  TransactionInputObject,
+} from "@/app/api-calls/transaction-apis";
+import { useTranslations } from "next-intl";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
 import { useQuery } from "@tanstack/react-query";
-import * as Yup from 'yup';
-
+import * as Yup from "yup";
 
 interface TransactionEditingModalProps {
   transaction: Transaction333 | null;
-  onSubmit: (transaction: Transaction333, newData: TransactionInputObject) => void;
+  onSubmit: (
+    transaction: Transaction333,
+    newData: TransactionInputObject,
+  ) => void;
   onClose: () => void;
   title: string;
 }
 
-
-export default function TransactionEditingModal({ transaction, onClose, title, onSubmit }: TransactionEditingModalProps) {
+export default function TransactionEditingModal({
+  transaction,
+  onClose,
+  title,
+  onSubmit,
+}: TransactionEditingModalProps) {
+  const t = useTranslations("transactionsPage");
   const { data: accountList } = useQuery({
     queryKey: ["account-list"],
     queryFn: getAccountList,
     enabled: transaction != null,
   });
-  const accounts = (accountList ?? []).map((item) => ({ label: item.name, value: item.id }));
+  const accounts = (accountList ?? []).map((item) => ({
+    label: item.name,
+    value: item.id,
+  }));
 
-
-  const fields = [{
-    name: 'account', type: 'select', options: accounts
-  }, 'amount', 'comment'];
+  const fields = [
+    {
+      name: "account",
+      type: "select",
+      options: accounts,
+      label: t("field.account"),
+    },
+    { name: "amount", label: t("field.amount") },
+    { name: "comment", label: t("field.comment") },
+  ];
 
   const validations = {
-    amount: Yup.number().required('Amount is required'),
-    comment: Yup.string().required('Comment is required'),
+    amount: Yup.number().required(t("validation.amountRequired")),
+    comment: Yup.string().required(t("validation.commentRequired")),
   };
 
   return (
-
     <GenericModal
       open={transaction !== null}
       onClose={onClose}
       onCancel={onClose}
+      cancelLabel={t("cancel")}
       title={title}
     >
-
-      {transaction &&
+      {transaction && (
         <DynamicForm
           fields={fields}
           initialValues={{
             account: transaction?.accountId,
             amount: transaction?.amount,
-            comment: transaction?.comment
+            comment: transaction?.comment,
           }}
           validationSchema={validations}
-          onSubmit={(values) => onSubmit(transaction, {
-            accountId: values.account,
-            amount: Number(values.amount),
-            comment: values.comment,
-          })}
-        />}
+          submitLabel={t("submit")}
+          onSubmit={(values) =>
+            onSubmit(transaction, {
+              accountId: values.account,
+              amount: Number(values.amount),
+              comment: values.comment,
+            })
+          }
+        />
+      )}
     </GenericModal>
-
   );
 }

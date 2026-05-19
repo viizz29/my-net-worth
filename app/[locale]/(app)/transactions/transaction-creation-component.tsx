@@ -1,14 +1,20 @@
-"use client"
+"use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import TransactionDetailsInputModal from "./transaction-input-modal";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import { createTransaction, TransactionInputObject } from "@/app/api-calls/transaction-apis";
+import {
+  createTransaction,
+  TransactionInputObject,
+} from "@/app/api-calls/transaction-apis";
 
 export default function TransactionCreationComponent() {
+  const t = useTranslations("transactionsPage");
 
-  const [transactionInputModalOpen, setTransactionInputModalOpen] = useState(false);
+  const [transactionInputModalOpen, setTransactionInputModalOpen] =
+    useState(false);
   const queryClient = useQueryClient();
 
   const createTransactionMutation = useMutation({
@@ -18,13 +24,10 @@ export default function TransactionCreationComponent() {
     },
   });
 
-
   const handleTransactionCreation = (data: TransactionInputObject) => {
     createTransactionMutation.mutate(data);
     setTransactionInputModalOpen(false);
   };
-
-
 
   return (
     <div className="flex justify-end">
@@ -46,11 +49,15 @@ export default function TransactionCreationComponent() {
           },
         }}
       >
-        Create New Transaction
+        {t("createNewTransaction")}
       </Button>
 
-      <TransactionDetailsInputModal open={transactionInputModalOpen} onClose={() => setTransactionInputModalOpen(false)} onSubmit={handleTransactionCreation} title={"Create New Transaction"} />
+      <TransactionDetailsInputModal
+        open={transactionInputModalOpen}
+        onClose={() => setTransactionInputModalOpen(false)}
+        onSubmit={handleTransactionCreation}
+        title={t("createNewTransaction")}
+      />
     </div>
   );
-
 }

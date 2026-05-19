@@ -1,7 +1,97 @@
 {
-  "HomePage": {
-    "name": "होम",
-    "title": "¡Bienvenido a nuestro sitio web!",
-    "about": "Aprende más sobre nosotros"
+  "pageHeader": {
+    "dashboard": {
+      "title": "डैशबोर्ड",
+      "subtitle": "आपका वित्तीय अवलोकन"
+    },
+    "accounts": {
+      "title": "खाते",
+      "subtitle": "अपनी नेट वर्थ ट्रैकिंग को चलाने वाले खातों को प्रबंधित करें।"
+    },
+    "transactions": {
+      "title": "लेन-देन",
+      "subtitle": "अपने खातों की गतिविधि की समीक्षा करें, बनाएं और अपडेट करें।"
+    }
+  },
+  "homePage": {
+    "name": "डैशबोर्ड",
+    "title": "हमारी वेबसाइट में आपका स्वागत है!",
+    "about": "हमारे बारे में और जानें"
+  },
+  "accountsPage": {
+    "name": "खाते",
+    "title": "अपने खाते प्रबंधित करें",
+    "createAccount": "एक नया खाता बनाएँ",
+    "viewAccounts": "मौजूद खाते देखें",
+    "createNewAccount": "नया खाता बनाएँ",
+    "editAccount": "खाते को संपादित करें",
+    "accountList": "खाते सूची",
+    "accountsAvailable": "{count, plural, one {# खाता उपलब्ध है।} other {# खाते उपलब्ध हैं।}}",
+    "noAccountsYet": "कोई खाते अभी तक नहीं हैं।",
+    "noAccountsAvailableYet": "कोई खाते उपलब्ध नहीं हैं।",
+    "serialNumber": "क्रमांक",
+    "actions": "कार्य",
+    "delete": "हटाएँ",
+    "edit": "संपादन",
+    "submit": "सबमिट करें",
+    "cancel": "रद्द करें",
+    "yes": "हाँ",
+    "deleteConfirmationTitle": "हटाने की पुष्टि करें",
+    "deleteConfirmationMessage": "क्या आप वाकई इस खाते '{name}' को हटाना चाहते हैं?",
+    "field": {
+      "id": "आईडी",
+      "name": "नाम",
+      "description": "विवरण",
+      "type": "प्रकार"
+    },
+    "validation": {
+      "nameRequired": "खाते का नाम आवश्यक है",
+      "descriptionRequired": "खाते का विवरण आवश्यक है",
+      "typeRequired": "खाते का प्रकार आवश्यक है"
+    }
+  },
+  "transactionsPage": {
+    "name": "लेन-देन",
+    "title": "आपका लेन-देन इतिहास",
+    "viewTransactions": "सभी लेन-देन देखें",
+    "filterTransactions": "दिनांक या राशि के अनुसार लेन-देन फ़िल्टर करें",
+    "createNewTransaction": "नया लेन-देन बनाएँ",
+    "editTransaction": "लेन-देन संपादित करें",
+    "transactionList": "लेन-देन सूची",
+    "transactionsAvailable": "{count, plural, one {# लेन-देन दर्ज है।} other {# लेन-देन दर्ज हैं।}}",
+    "noTransactionsYet": "कोई लेन-देन अभी तक नहीं है।",
+    "noTransactionsAvailableYet": "कोई लेन-देन उपलब्ध नहीं हैं।",
+    "serialNumber": "क्रमांक",
+    "actions": "कार्य",
+    "delete": "हटाएँ",
+    "edit": "संपादन",
+    "submit": "सबमिट करें",
+    "cancel": "रद्द करें",
+    "yes": "हाँ",
+    "deleteConfirmationTitle": "हटाने की पुष्टि करें",
+    "deleteConfirmationMessage": "क्या आप वाकई इस लेन-देन '{comment}' को हटाना चाहते हैं?",
+    "field": {
+      "id": "आईडी",
+      "accountId": "खाता",
+      "account": "खाता",
+      "amount": "राशि",
+      "comment": "टिप्पणी"
+    },
+    "validation": {
+      "amountRequired": "राशि आवश्यक है",
+      "commentRequired": "टिप्पणी आवश्यक है"
+    }
+  },
+  "sideBar": {
+    "brand": "मेरा नेट वर्थ",
+    "home": "डैशबोर्ड",
+    "accounts": "खाते",
+    "transactions": "लेन-देन"
+  },
+  "languageSwitcher": {
+    "label": "भाषा बदलें",
+    "switchTo": "{locale} में स्विच करें",
+    "english": "अंग्रेज़ी",
+    "hindi": "हिन्दी"
   }
 }

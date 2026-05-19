@@ -1,12 +1,14 @@
-"use client"
+"use client";
 
 import { AccountObject333, createAccount } from "@/app/api-calls/account-apis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import AccountDetailsInputModal from "./account-details-input-modal";
 import { useState } from "react";
 import { Button } from "@mui/material";
 
 export default function AccountCreationComponent() {
+  const t = useTranslations("accountsPage");
 
   const [noteInputModalOpen, setNoteInputModalOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -18,13 +20,10 @@ export default function AccountCreationComponent() {
     },
   });
 
-
   const handleNoteCreation = (data: AccountObject333) => {
     createDataNodeMutation.mutate(data);
     setNoteInputModalOpen(false);
   };
-
-
 
   return (
     <div className="flex justify-end">
@@ -46,11 +45,15 @@ export default function AccountCreationComponent() {
           },
         }}
       >
-        Create New Account
+        {t("createNewAccount")}
       </Button>
 
-      <AccountDetailsInputModal open={noteInputModalOpen} onClose={() => setNoteInputModalOpen(false)} onSubmit={handleNoteCreation} title={"Create New Account"} />
+      <AccountDetailsInputModal
+        open={noteInputModalOpen}
+        onClose={() => setNoteInputModalOpen(false)}
+        onSubmit={handleNoteCreation}
+        title={t("createNewAccount")}
+      />
     </div>
   );
-
 }

@@ -1,11 +1,6 @@
-
-
-
-
 import { Transaction333 } from "@/app/api-calls/transaction-apis";
+import { useTranslations } from "next-intl";
 import ConfirmModal from "@/app/components/modals/confirmation-modal";
-
-
 
 interface TransactionDeletionModalProps {
   transaction: Transaction333 | null;
@@ -13,10 +8,26 @@ interface TransactionDeletionModalProps {
   onCancel: () => void;
 }
 
+export default function TransactionDeletionModal({
+  transaction,
+  onCancel,
+  onSubmit,
+}: TransactionDeletionModalProps) {
+  const t = useTranslations("transactionsPage");
 
-export default function TransactionDeletionModal({ transaction, onCancel, onSubmit }: TransactionDeletionModalProps) {
   return (
-    transaction &&
-    <ConfirmModal open={transaction !== null} message={`Are you sure you want to delete this transaction '${transaction.comment}'`} onConfirm={() => onSubmit(transaction)} onCancel={onCancel} />
+    transaction && (
+      <ConfirmModal
+        open={transaction !== null}
+        title={t("deleteConfirmationTitle")}
+        message={t("deleteConfirmationMessage", {
+          comment: transaction.comment,
+        })}
+        onConfirm={() => onSubmit(transaction)}
+        onCancel={onCancel}
+        cancelLabel={t("cancel")}
+        confirmLabel={t("yes")}
+      />
+    )
   );
 }

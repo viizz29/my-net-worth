@@ -1,48 +1,57 @@
-export type PageHeaderContent = {
-  title: string;
-  subtitle: string;
-};
+export type PageHeaderContentKey = "accounts" | "transactions" | "dashboard";
 
 type RouteHeaderDefinition = {
   href: string;
-  content: PageHeaderContent;
+  contentKey: PageHeaderContentKey;
 };
 
 const routeHeaderDefinitions: RouteHeaderDefinition[] = [
   {
     href: "/accounts",
-    content: {
-      title: "Accounts",
-      subtitle: "Manage the accounts that power your net worth tracking.",
-    },
+    contentKey: "accounts",
   },
   {
     href: "/transactions",
-    content: {
-      title: "Transactions",
-      subtitle: "Review, create, and update the activity across your accounts.",
-    },
+    contentKey: "transactions",
   },
   {
     href: "/",
-    content: {
-      title: "Dashboard",
-      subtitle: "Your financial overview",
-    },
+    contentKey: "dashboard",
   },
 ];
 
-export function getPageHeaderContent(pathname: string): PageHeaderContent {
+function getPathnameWithoutLocale(pathname: string, locale: string) {
+  const localePrefix = `/${locale}`;
+
+  if (pathname === localePrefix) {
+    return "/";
+  }
+
+  if (pathname.startsWith(`${localePrefix}/`)) {
+    return pathname.slice(localePrefix.length);
+  }
+
+  return pathname;
+}
+
+export function getPageHeaderContentKey(
+  pathname: string,
+  locale: string,
+): PageHeaderContentKey {
+  const pathnameWithoutLocale = getPathnameWithoutLocale(pathname, locale);
   const matchedRoute = routeHeaderDefinitions.find(({ href }) => {
     if (href === "/") {
-      return pathname === href;
+      return pathnameWithoutLocale === href;
     }
 
-    return pathname === href || pathname.startsWith(`${href}/`);
+    return (
+      pathnameWithoutLocale === href ||
+      pathnameWithoutLocale.startsWith(`${href}/`)
+    );
   });
 
   return (
-    matchedRoute?.content ??
-    routeHeaderDefinitions[routeHeaderDefinitions.length - 1].content
+    matchedRoute?.contentKey ??
+    routeHeaderDefinitions[routeHeaderDefinitions.length - 1].contentKey
   );
 }
