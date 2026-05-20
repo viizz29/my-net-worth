@@ -6,6 +6,22 @@ export interface TransactionInputObject {
   comment: string;
 }
 
+export interface ExpenseInADay {
+  date: string;
+  amount: number;
+}
+
+export interface MonthlyIncome {
+  month: string;
+  amount: number;
+}
+
+export interface NetWorth {
+  netWorth: string;
+  totalIncome: string;
+  totalExpenses: string;
+}
+
 export interface Transaction333 extends TransactionInputObject {
   id: string;
 }
@@ -17,6 +33,21 @@ export const createTransaction = async (data: TransactionInputObject) => {
 
 export const getTransactionList = async (): Promise<Transaction333[]> => {
   const res = await api.get("/v1/transactions");
+  return res.data.data;
+};
+
+export const getLast10DaysExpenses = async (): Promise<ExpenseInADay[]> => {
+  const res = await api.get("/v1/transactions/expenses/last-10-days");
+  return res.data.data.expenses;
+};
+
+export const getLast6MonthsIncome = async (): Promise<MonthlyIncome[]> => {
+  const res = await api.get("/v1/transactions/income/last-6-months");
+  return res.data.data.income;
+};
+
+export const getNetWorth = async (): Promise<NetWorth> => {
+  const res = await api.get("/v1/transactions/net-worth");
   return res.data.data;
 };
 

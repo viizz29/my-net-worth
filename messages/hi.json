@@ -16,7 +16,17 @@
   "homePage": {
     "name": "डैशबोर्ड",
     "title": "हमारी वेबसाइट में आपका स्वागत है!",
-    "about": "हमारे बारे में और जानें"
+    "about": "हमारे बारे में और जानें",
+    "last10Transactions": "पिछले 10 लेन-देन",
+    "last10TransactionsDesc": "आपके सबसे हाल के लेन-देन का विज़ुअलाइज़ेशन",
+    "noTransactionsYet": "अभी तक कोई लेन-देन नहीं हुआ।",
+    "last6MonthsIncome": "पिछले 6 महीने की आय",
+    "last6MonthsIncomeDesc": "आपका मासिक आय अवलोकन",
+    "noIncomeData": "अभी तक कोई आय डेटा नहीं।",
+    "netWorth": "कुल संपत्ति",
+    "netWorthDesc": "आपकी कुल आय घटा कुल व्यय",
+    "totalIncome": "कुल आय",
+    "totalExpenses": "कुल व्यय"
   },
   "accountsPage": {
     "name": "खाते",

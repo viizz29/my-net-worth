@@ -2,7 +2,17 @@
   "homePage": {
     "name": "Home",
     "title": "Welcome to our website!",
-    "about": "Learn more about us"
+    "about": "Learn more about us",
+    "last10Transactions": "Last 10 Transactions",
+    "last10TransactionsDesc": "Your most recent transactions visualized",
+    "noTransactionsYet": "No transactions yet.",
+    "last6MonthsIncome": "Last 6 Months Income",
+    "last6MonthsIncomeDesc": "Your monthly income overview",
+    "noIncomeData": "No income data yet.",
+    "netWorth": "Net Worth",
+    "netWorthDesc": "Your total income minus total expenses",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expenses"
   },
   "sideBar": {
     "brand": "My Net Worth",
