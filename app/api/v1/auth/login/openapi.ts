@@ -23,7 +23,7 @@ const loginRouteSpec = {
             examples: {
               default: {
                 value: {
-                  email: "user1@example.com",
+                  email: "avery.patel@example.com",
                   password: "password123",
                 },
               },
