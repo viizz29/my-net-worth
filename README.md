@@ -69,29 +69,30 @@ npm run dev
 
 Visit [http://localhost:3000/](http://localhost:3000/) and log in using:
 
-| Email               | Password      |
-| ------------------- | ------------- |
-| `user1@example.com` | `password123` |
+| Email                     | Password      |
+| ------------------------- | ------------- |
+| `avery.patel@example.com` | `password123` |
 
-Interactive API docs: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+Interactive API docs: [http://localhost:3000/en/api-docs](http://localhost:3000/en/api-docs)
 
 ### Demo Accounts
 
-The seed script creates 5 demo users (`user1@example.com` through `user5@example.com`) all with password `password123`, each with sample accounts and transactions.
+The seed script creates 5 demo users (`avery.patel@example.com`, `maya.thompson@example.com`, `jordan.kim@example.com`, `sofia.garcia@example.com`, `noah.williams@example.com`) all with password `password123`, each with sample accounts and transactions.
 
 ## npm Scripts
 
-| Script                     | Description              |
-| -------------------------- | ------------------------ |
-| `npm run dev`              | Start development server |
-| `npm run build`            | Production build         |
-| `npm run start`            | Start production server  |
-| `npm run lint`             | Lint code with ESLint    |
-| `npm run migrate:dev`      | Run Sequelize migrations |
-| `npm run seed:dev`         | Seed demo data           |
-| `npm run migrate:dev:undo` | Undo last migration      |
-| `npm run prisma:gen:dev`   | Generate Prisma client   |
-| `npm run openapi:generate` | Generate OpenAPI spec    |
+| Script                     | Description               |
+| -------------------------- | ------------------------- |
+| `npm run dev`              | Start development server  |
+| `npm run build`            | Production build          |
+| `npm run start`            | Start production server   |
+| `npm run lint`             | Lint code with ESLint     |
+| `npm run migrate:dev`      | Run Sequelize migrations  |
+| `npm run seed:dev`         | Seed demo data            |
+| `npm run migrate:dev:undo` | Undo last migration       |
+| `npm run prisma:gen:dev`   | Generate Prisma client    |
+| `npm run openapi:generate` | Generate OpenAPI spec     |
+| `npm run prisma:seed:dev`  | Seed demo data via Prisma |
 
 ## API
 
@@ -148,6 +149,7 @@ my-net-worth/
 │   │   └── login/              # Login page
 │   ├── api/
 │   │   ├── v1/                 # API routes
+│   │   ├── hello/              # Example API route
 │   │   └── _lib/               # Shared API utilities
 │   ├── api-calls/              # Frontend API client functions
 │   ├── auth/                   # Auth context, hooks, guards
