@@ -117,7 +117,7 @@ const DynamicField = <T,>({
           fullWidth
           label={label}
           value={value || ""}
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => handleChange(e.target.value as T)}
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
@@ -134,7 +134,7 @@ const DynamicField = <T,>({
           type="number"
           label={label}
           value={value ?? ""}
-          onChange={(e) => handleChange(Number(e.target.value))}
+          onChange={(e) => handleChange(Number(e.target.value) as T)}
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
@@ -152,7 +152,7 @@ const DynamicField = <T,>({
           label={label}
           slotProps={{ inputLabel: { shrink: true } }}
           value={value || ""}
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => handleChange(e.target.value as T)}
           onBlur={() => onBlur?.()}
           error={hasError}
           helperText={displayedHelperText}
@@ -168,7 +168,7 @@ const DynamicField = <T,>({
             name={name}
             value={value ?? ""}
             label={label}
-            onChange={(e) => handleChange(e.target.value)}
+            onChange={(e) => handleChange(e.target.value as T)}
             onBlur={() => onBlur?.()}
             MenuProps={{
               PaperProps: {
@@ -180,7 +180,7 @@ const DynamicField = <T,>({
                   backgroundImage: "none",
                 },
               },
-            }}
+            } as unknown as undefined}
           >
             {options.map((opt) => (
               <MenuItem key={opt.value} value={opt.value}>
@@ -210,7 +210,7 @@ const DynamicField = <T,>({
             min={min}
             max={max}
             step={step}
-            onChange={(_, val) => handleChange(val)}
+            onChange={(_, val) => handleChange(val as T)}
             valueLabelDisplay="auto"
             sx={{
               color: "var(--color-primary)",
@@ -240,7 +240,7 @@ const DynamicField = <T,>({
               <Switch
                 name={name}
                 checked={Boolean(value)}
-                onChange={(e) => handleChange(e.target.checked)}
+                onChange={(e) => handleChange(e.target.checked as T)}
                 onBlur={() => onBlur?.()}
                 sx={{
                   "& .MuiSwitch-switchBase.Mui-checked": {

@@ -6,6 +6,8 @@ import {
   Button,
 } from "@mui/material";
 
+
+
 type ConfirmModalProps = {
   open: boolean;
   title?: string;
@@ -29,17 +31,17 @@ export default function ConfirmModal({
     <Dialog
       open={open}
       onClose={onCancel}
-      PaperProps={{
-        sx: {
-          minWidth: { xs: "calc(100% - 2rem)", sm: 440 },
-          borderRadius: "1rem",
-          border: "1px solid var(--color-border)",
-          backgroundColor: "var(--color-background)",
-          color: "var(--color-foreground)",
-          boxShadow: "0 24px 80px rgba(15, 23, 42, 0.18)",
-          backgroundImage: "none",
-        },
-      }}
+    // PaperProps={{
+    //   sx: {
+    //     minWidth: { xs: "calc(100% - 2rem)", sm: 440 },
+    //     borderRadius: "1rem",
+    //     border: "1px solid var(--color-border)",
+    //     backgroundColor: "var(--color-background)",
+    //     color: "var(--color-foreground)",
+    //     boxShadow: "0 24px 80px rgba(15, 23, 42, 0.18)",
+    //     backgroundImage: "none",
+    //   },
+    // }}
     >
       <DialogTitle
         sx={{ borderBottom: "1px solid var(--color-border)", fontWeight: 700 }}

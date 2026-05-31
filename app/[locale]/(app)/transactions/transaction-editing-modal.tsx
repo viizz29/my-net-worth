@@ -4,7 +4,7 @@ import {
   TransactionInputObject,
 } from "@/app/api-calls/transaction-apis";
 import { useTranslations } from "next-intl";
-import DynamicForm from "@/app/components/forms/dynamic-form";
+import DynamicForm, { FormField } from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
 import { useQuery } from "@tanstack/react-query";
 import * as Yup from "yup";
@@ -36,7 +36,7 @@ export default function TransactionEditingModal({
     value: item.id,
   }));
 
-  const fields = [
+  const fields: FormField[] = [
     {
       name: "account",
       type: "select",
@@ -72,9 +72,9 @@ export default function TransactionEditingModal({
           submitLabel={t("submit")}
           onSubmit={(values) =>
             onSubmit(transaction, {
-              accountId: values.account,
+              accountId: values.account as string,
               amount: Number(values.amount),
-              comment: values.comment,
+              comment: values.comment as string,
             })
           }
         />

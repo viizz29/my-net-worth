@@ -7,9 +7,9 @@ export async function deleteAccountForUser(
   userId: bigint,
   accountSn: bigint,
 ): Promise<DeleteAccountResponseDto> {
-  const prisma = getPrismaConnection();
+  const prismaConnection = getPrismaConnection();
 
-  const existingAccount = await prisma.accounts.findFirst({
+  const existingAccount = await prismaConnection.accounts.findFirst({
     select: {
       id: true,
       name: true,
@@ -29,7 +29,7 @@ export async function deleteAccountForUser(
   }
 
   try {
-    await prisma.accounts.delete({
+    await prismaConnection.accounts.delete({
       where: {
         user_id_sn: {
           user_id: userId,

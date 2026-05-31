@@ -4,5 +4,5 @@ const originalEnv = { ...process.env };
 export * from "./configs/base";
 export * from "./configs/common";
 
-delete originalEnv.NODE_ENV;
+delete (originalEnv as { NODE_ENV?: string }).NODE_ENV;
 process.env = { ...originalEnv }; // restore the config

@@ -11,11 +11,15 @@ export type AccountListItemDto = {
 };
 
 export type GetAccountsResponseDto = {
-  accounts: AccountListItemDto[];
-};
+  id: bigint[];
+  name: string;
+  description: string;
+  type: string;
+}[];
 
 export type CreateAccountResponseDto = {
-  account: AccountListItemDto;
+  id: bigint[];
+  name: string;
 };
 
 export type AccountDetailsDto = {

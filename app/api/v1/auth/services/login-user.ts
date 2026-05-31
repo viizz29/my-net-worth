@@ -33,13 +33,9 @@ export async function loginUser({
     throw new AuthServiceError("Server error, secret key not set", 500);
   }
 
-  const token = jwt.sign(
-    { sub: encodeId(foundUser.id.toString()) },
-    JWT_SECRET,
-    {
-      expiresIn: "2 days",
-    },
-  );
+  const token = jwt.sign({ sub: encodeId([foundUser.id]) }, JWT_SECRET, {
+    expiresIn: "2 days",
+  });
 
   return toAuthSuccessResponseDto(foundUser, token);
 }

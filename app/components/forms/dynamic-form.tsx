@@ -8,7 +8,7 @@ import DynamicField, {
   type Option,
 } from "./dynamic-field";
 
-type FormField = {
+export type FormField = {
   name: string;
   label?: string;
   type?: FieldType;
@@ -31,16 +31,17 @@ export default function DynamicForm({
   validationSchema,
   onSubmit,
   initialValues: providedValues,
+  submitLabel,
 }: Props) {
   const fieldRefs = useRef<(HTMLInputElement | null)[]>([]);
   const normalizedFields = fields.map((field) =>
     typeof field === "string"
       ? { name: field, label: field, type: "textfield" as const }
       : {
-          ...field,
-          label: field.label ?? field.name,
-          type: field.type ?? "textfield",
-        },
+        ...field,
+        label: field.label ?? field.name,
+        type: field.type ?? "textfield",
+      },
   );
 
   // Create initial values dynamically

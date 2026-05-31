@@ -54,9 +54,9 @@ export default function AccountEditingModal({
           submitLabel={t("submit")}
           onSubmit={(values) =>
             onSubmit(account, {
-              name: values.name,
-              description: values.description,
-              type: values.type,
+              name: values.name as string,
+              description: values.description as string,
+              type: values.type as string,
             })
           }
         />

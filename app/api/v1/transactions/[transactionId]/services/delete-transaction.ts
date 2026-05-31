@@ -1,6 +1,6 @@
 import { AppError } from "@/app/api/_lib/my-error";
 import { getPrismaConnection } from "@/app/db/prisma/prisma-connection";
-import type { DeleteTransactionResponseDto } from "../../../dtos/transactions-response-dto";
+import { DeleteTransactionResponseDto } from "../../dtos/transactions-response-dto";
 
 export async function deleteTransactionForUser(
   userId: bigint,

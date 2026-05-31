@@ -1,6 +1,6 @@
 "use client";
 
-import { AccountObject333, createAccount } from "@/app/api-calls/account-apis";
+import { AccountObject333, createAccount, NewAccountInfo } from "@/app/api-calls/account-apis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import AccountDetailsInputModal from "./account-details-input-modal";
@@ -20,7 +20,7 @@ export default function AccountCreationComponent() {
     },
   });
 
-  const handleNoteCreation = (data: AccountObject333) => {
+  const handleNoteCreation = (data: NewAccountInfo) => {
     createDataNodeMutation.mutate(data);
     setNoteInputModalOpen(false);
   };

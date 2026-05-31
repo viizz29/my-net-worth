@@ -1,4 +1,4 @@
-import { AccountObject333 } from "@/app/api-calls/account-apis";
+import { NewAccountInfo } from "@/app/api-calls/account-apis";
 import { useTranslations } from "next-intl";
 import DynamicForm from "@/app/components/forms/dynamic-form";
 import GenericModal from "@/app/components/modals/generic-modal";
@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 interface AccountDetailsInputModalProps {
   open: boolean;
-  onSubmit: (data: AccountObject333) => void;
+  onSubmit: (data: NewAccountInfo) => void;
   onClose: () => void;
   title: string;
 }
@@ -48,9 +48,9 @@ export default function AccountDetailsInputModal({
         submitLabel={t("submit")}
         onSubmit={(values) =>
           onSubmit({
-            name: values.name,
-            description: values.description,
-            type: values.type,
+            name: values.name as string,
+            description: values.description as string,
+            type: values.type as string,
           })
         }
       />

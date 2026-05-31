@@ -10,12 +10,10 @@ export type TransactionListItemDto = {
   updatedAt: string;
 };
 
-export type GetTransactionsResponseDto = {
-  transactions: TransactionListItemDto[];
-};
+export type GetTransactionsResponseDto = unknown[];
 
 export type CreateTransactionResponseDto = {
-  transaction: TransactionListItemDto;
+  transaction: unknown;
 };
 
 export type TransactionDetailsDto = {
@@ -28,13 +26,13 @@ export type TransactionDetailsDto = {
 };
 
 export type GetTransactionResponseDto = {
-  transaction: TransactionDetailsDto;
+  transaction: unknown;
 };
 
 export type UpdateTransactionResponseDto = {
-  transaction: TransactionDetailsDto;
+  transaction: unknown;
 };
 
 export type DeleteTransactionResponseDto = {
-  transaction: TransactionDetailsDto;
+  transaction: unknown;
 };
