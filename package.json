@@ -14,7 +14,9 @@
     "seed:dev": "cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
     "migrate:dev:undo": "cross-env NODE_ENV=local npx sequelize db:migrate:undo",
     "prisma:gen:dev": "cross-env NODE_ENV=local npx prisma generate",
-    "prisma:seed:dev": "cross-env NODE_ENV=local npx prisma db seed"
+    "prisma:seed:dev": "cross-env NODE_ENV=local npx prisma db seed",
+    "migrate:prod": "cross-env NODE_ENV=production npx sequelize db:migrate",
+    "seed:prod": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
