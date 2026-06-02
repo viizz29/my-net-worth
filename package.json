@@ -16,7 +16,8 @@
     "prisma:gen:dev": "cross-env NODE_ENV=local npx prisma generate",
     "prisma:seed:dev": "cross-env NODE_ENV=local npx prisma db seed",
     "migrate:prod": "cross-env NODE_ENV=production npx sequelize db:migrate",
-    "seed:prod": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all"
+    "seed:prod": "cross-env NODE_ENV=production npx sequelize-cli db:seed:all",
+    "prisma:gen:prod": "cross-env NODE_ENV=production npx prisma generate"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
